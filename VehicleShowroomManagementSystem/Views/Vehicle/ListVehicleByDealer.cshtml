@@ -1,0 +1,211 @@
+﻿@model List<Model.ViewModel.ImageVehicle>
+
+@{
+    var customerSession = (VehicleShowroomManagementSystem.Models.UserLogin)Session[Common.Constants.USER_SESSION];
+}
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var blog = (List<Model.EF.Blog>)ViewBag.Blog;
+    var dealer = (Model.EF.Dealer)ViewBag.Dealer;
+    var compare = (List<Model.ViewModel.CompareViewModel>)ViewBag.Compare;
+}
+
+@section title{
+
+    XBOX Vehicle Showroom
+
+}
+
+@section jsFooter{
+
+    <script src="~/Assets/client/js/controller/VehicleController.js"></script>
+}
+
+<div class="page-heading">
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul>
+                        <li class="home"> <a href="/" title="Go to Home Page">Home</a> <span>&rsaquo; </span> </li>
+                        <li class="category1599"> <a href="/" title="">Branch Dealer</a> <span>&rsaquo; </span> </li>
+                        <li class="category1600"> <a href="/Vehicle/ListVehicleByDealer?dealerId=@dealer.ID" title="">@dealer.DealerName</a> <span>&rsaquo; </span> </li>
+
+                    </ul>
+                </div>
+                <!--col-xs-12-->
+            </div>
+            <!--row-->
+        </div>
+        <!--container-->
+    </div>
+    <div class="page-title">
+        <h2>@dealer.DealerName</h2>
+        <br />
+        <h2>@dealer.Email</h2>
+        <br />
+        <h2>@dealer.Phone</h2>
+    </div>
+</div>
+<!--breadcrumbs-->
+<!-- BEGIN Main Container col2-left -->
+<section class="main-container col2-left-layout bounceInUp animated">
+    <!-- For version 1, 2, 3, 8 -->
+    <!-- For version 1, 2, 3 -->
+    <div class="container">
+        <div class="row">
+            <div class="col-main col-sm-12 col-sm-push-3 product-grid">
+                <div class="pro-coloumn">
+                    <article class="col-main">
+
+                        <div class="category-products">
+                            <ol class="products-list" id="products-list">
+                                @foreach (var item in Model)
+                                {
+                                    <li class="item">
+                                        <div class="product-image">
+                                            <a href="@Url.Action("VehicleDetail","Vehicle",new { vehicleId = item.VehicleID })" title="@item.VehicleName">
+                                                <img class="small-image" src="~/Assets/dealer/img/vehicle/@item.Image" alt="@item.VehicleName" />
+                                            </a>
+                                            @if (item.SaleOff != 0)
+                                            {
+                                                <div style="position:relative; border-radius:0px; " class="sale-label sale-top-right"><strong>Sale Off @(item.SaleOff*100)%</strong></div>
+                                            }
+                                        </div>
+
+                                        <div class="product-shop">
+
+                                            <h2 class="product-name">
+                                                <a href="@Url.Action("VehicleDetail","Vehicle",new { vehicleId = item.VehicleID })" title="@item.VehicleName">@item.VehicleName</a>
+
+                                            </h2>
+
+                                            <div class="ratings">
+                                                <div class="rating-box">
+                                                    <div style="width:100%" class="rating"></div>
+                                                </div>
+                                                <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#review-form">Add Your Review</a> </p>
+                                            </div>
+                                            <div class="desc std">
+                                                <p>
+                                                    @item.Description
+                                                </p>
+                                                <p>
+                                                    @item.Detail... <a class="link-learn" title="" href="#">Learn More</a>
+                                                </p>
+                                            </div>
+                                            <div class="price-box">
+                                                @if (item.SaleOff != 0)
+                                                {
+                                                    <p class="old-price"> <span class="price-label"></span> <span id="old-price-212" class="price">@(item.SaleOff !=0? item.Price:0) </span> </p>
+                                                }
+
+                                                <p class="special-price"> <span class="price-label"></span> <span id="product-price-212" class="price"> $@(item.SaleOff !=0? (item.Price-item.Price*(decimal)item.SaleOff).ToString("N0"): item.Price.ToString("N0")) </span> </p>
+                                            </div>
+                                            <div class="actions">
+                                                <a href=@(customerSession==null?"/Customer/Login":"/Cart/AddItem?vehicleId="+item.VehicleID) class="button " title="Add to Cart"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;<span>Add to Cart</span></a>
+                                                <span class="add-to-links">
+                                                 
+                                                    <a title="Add to Compare" class="button " href="@Url.Action("AddCompare","Vehicle",new { vehicleId=item.VehicleID })"><i class="fa fa-bar-chart"></i><span>Add to Compare</span></a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+
+
+                            </ol>
+                        </div>
+                        <!--PageList-->
+
+                        @if (ViewBag.TotalPage > 1)
+                        {
+                            var pageDisplay = (int)(ViewBag.MaxPage);//hien thi 5 trang
+                            int totalPage = (int)ViewBag.TotalPage;//tongr co 2 trang
+                            int currentPage = (ViewBag.Page != null ? (int)ViewBag.Page : 1);
+
+
+                            //var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+                            //var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+                            var startPageIndex = currentPage - (int)pageDisplay / 2;
+                            var endPageIndex = currentPage + (int)pageDisplay / 2;
+
+                            if (startPageIndex <= 0)
+                            {
+                                endPageIndex -= (startPageIndex - 1);
+                                startPageIndex = 1;
+                            }
+                            if (endPageIndex > totalPage)
+                            {
+                                endPageIndex = totalPage;
+                                if (endPageIndex > pageDisplay)
+                                {
+                                    startPageIndex = endPageIndex - (pageDisplay - 1);
+                                }
+                            }
+
+                            var link = "/Vehicle/ListVehicleByDealer?dealerId=" + ViewBag.DealerId;
+
+                            <div class="toolbar bottom">
+                                <span class="store-qty">Display from index <strong>@(ViewBag.PageSize*(@currentPage-1)+1)</strong> to index <strong>@((ViewBag.PageSize*@currentPage)-ViewBag.PageSize==0? (ViewBag.PageSize * currentPage):ViewBag.Total)</strong> in total <strong>@ViewBag.Total</strong> vehicles</span>
+                                @if (endPageIndex > 1)
+                                {
+
+                                    <div class="pages">
+                                        <ul class="pagination">
+                                            @if (currentPage > 1)
+
+
+                                            {
+                                                <li>
+                                                    <a href="@link&pageIndex=@ViewBag.First" title="First"><i class="fa fa-angle-double-left"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="@link&pageIndex=@(currentPage-1)" title="Previous"><i class="fa fa-angle-left"></i></a>
+                                                </li>
+                                            }
+
+                                            @for (var page = startPageIndex; page <= endPageIndex; page++)
+                                            {
+                                                <li @(page == currentPage ? "class=active" : "")>
+                                                    <a href="@link&pageIndex=@page">@page</a>
+                                                </li>
+                                            }
+                                            @if (currentPage < ViewBag.TotalPage)
+                                            {
+                                                <li>
+                                                    <a href="@link&pageIndex=@(currentPage+1)" title="Next"><i class="fa fa-angle-right"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="@link&pageIndex=@totalPage" title="Last"><i class="fa fa-angle-double-right"></i></a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+
+                                }
+
+
+                            </div>
+                        }
+                        else if (ViewBag.Total == 0)
+                        {
+                            <h1><span>No Record</span></h1>
+                        }
+
+
+                    </article>
+                </div>
+                <!--	///*///======    End article  ========= //*/// -->
+            </div>
+         
+            <!--col-right sidebar-->
+        </div>
+        <!--row-->
+    </div>
+    <!--container-->
+</section>
+<!--main-container col2-left-layout--> 

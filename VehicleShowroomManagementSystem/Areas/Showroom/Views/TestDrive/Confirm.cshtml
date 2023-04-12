@@ -1,0 +1,94 @@
+﻿@model PagedList.IPagedList<Model.ViewModel.TestDriveVehicleModel>
+@using PagedList.Mvc;
+@{
+
+    Layout = "~/Areas/Showroom/Views/Shared/_Layouts.cshtml";
+}
+
+@section title{
+    XBOx Vehicle Showroom - Test-Drive Management
+}
+
+@section header{
+    List Test-Drive Requirement of Customer
+}
+@section jsFooter{
+
+    <script src="~/Assets/showroom/js/controller/TestDriveController.js"></script>
+}
+
+<div class="card shadow mb-4">
+
+
+    @using (Html.BeginForm("Confirm", "Blog", FormMethod.Get))
+    {
+        <div class="row" style="margin:20px 20px 20px 10px;">
+            <div class="col-lg-4">
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search here..." name="searchString" value="@ViewBag.SearchKeyword" aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>           
+        </div>
+    }
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>                     
+                        <th>Vehicle Name</th>
+                        <th>Model Number</th>
+                        <th>Customer Name</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Driver License</th>
+                        <th>More Request</th>
+                        <th>Registration Date</th>
+                        <th>Confirmation</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (Model.ViewModel.TestDriveVehicleModel item in Model)
+                    {
+                    <tr id="row_@item.ID">
+                        <td>@item.VehicleName</td>
+                        <td>@item.ModelNumber</td>
+                        <td>@item.Name</td>
+                        <td>@item.Address</td>
+                        <td>@item.Email</td>
+                        <td>@item.Phone</td>
+                        <td>@item.DriverLicense</td>
+                        <td>@item.MoreRequest</td>
+                        <td>@item.RegistrationDate.ToShortDateString()</td>
+                        <td>
+                            @using (Html.BeginForm("ChangeStatus", "TestDrive", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken();
+
+                                <div class="form-group">
+                                    @Html.DropDownList("Status", new SelectList(ViewBag.ListConfirm, "Value", "Text", item.Status), new { @class = "form-control", @id = item.ID, onchange = "this.form.submit();" })
+                                    @Html.Hidden("id", item.ID)
+                                </div>
+
+                            }
+                        </td>
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+        </div>
+    </div>
+</div>
+

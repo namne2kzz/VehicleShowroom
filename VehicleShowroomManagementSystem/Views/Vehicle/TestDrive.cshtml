@@ -1,0 +1,136 @@
+﻿@model Model.EF.TestDrive
+@{
+    var customerSession = (VehicleShowroomManagementSystem.Models.UserLogin)Session[Common.Constants.USER_SESSION];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@section title{
+    XBOX Vehicle Showroom
+}
+
+
+
+@if (TempData["msg"] != null)
+{
+    @Html.Raw(TempData["msg"])
+}
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title">
+                    <h2>Test-Drive Registration</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BEGIN Main Container col2-right -->
+<div class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            @using (Html.BeginForm("TestDrive", "Vehicle", FormMethod.Post))
+            {
+                <div class="col-main col-sm-12 wow bounceInUp animated animated" style="visibility: visible;">
+                    <div id="messages_product_view"></div>
+                    <div class="static-contain">
+
+
+                        @Html.AntiForgeryToken()
+
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.VehicleID, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.VehicleID, ViewBag.Vehicle as SelectList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.VehicleID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Address, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.RegistrationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.RegistrationDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.RegistrationDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.DriverLicense, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.DriverLicense, ViewBag.DriveLicense as SelectList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DriverLicense, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.MoreRequest, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.MoreRequest, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.MoreRequest, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @if (customerSession != null)
+                        {
+                            <div class="buttons-set">
+                                <button type="submit" title="Submit" class="button submit"><span><span>Submit</span></span></button>
+                            </div>
+                        }
+
+
+                    </div>
+
+                </div>
+
+            }
+        </div>
+        <!--row-->
+    </div>
+    <!--main-container-inner-->
+</div>
+<!--main-container col2-left-layout-->

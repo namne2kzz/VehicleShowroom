@@ -1,0 +1,159 @@
+﻿
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom
+}
+
+@section jsFooter{
+
+    <script src="~/Assets/client/js/controller/FinanceController.js"></script>
+}
+
+<div class="page-heading">
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-title">
+                        <h2>Finance Calculator</h2>
+                    </div>
+                </div>
+                <!--col-xs-12-->
+            </div>
+            <!--row-->
+        </div>
+        <!--container-->
+    </div>
+    <!--breadcrumbs-->
+</div>
+<div class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+
+            <div class="col-main col-sm-7 wow bounceInUp animated animated" style="visibility: visible;">
+                <div id="messages_product_view"></div>
+                <div class="static-contain">
+
+                    <form class="form-group">
+                        <div class="step-title">
+                            <h3 class="one_page_heading">SELECT OPTION</h3>
+                        </div>
+
+
+                        <label>Select Brand</label>
+                        <div style="padding-block:10px;" class="input-box">
+                            <select name="" id="sltBrand" class="form-control">
+                            </select>
+                        </div>
+
+
+
+                        <label>Select Vehicle</label>
+                        <div style="padding-block:10px;" class="input-box">
+                            <select name="" id="sltVehicle" class="form-control">
+                            </select>
+                        </div>
+                    </form>
+
+                    <table>
+                        <colgroup>
+                            <col width="500px" />
+                            <col/>
+                        </colgroup>
+                        <tr>
+                            <td>
+                                <div class="step-title">
+
+                                    <label>PRICE</label>
+                                </div>
+                            </td>
+                            <td>
+                                <strong><span id="txtPrice">0</span></strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="step-title">
+
+                                    <label>REGISTRATION FEE</label>
+                                </div>
+                            </td>
+                            <td>
+                                <strong>  <span id="txtRegistrationFee">0</span></strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="step-title">
+
+                                    <label>ROAD MAINTENANCE FEE</label>
+                                </div>
+                            </td>
+                            <td>
+                                <strong>   <span id="txtRoadMaintentanceFee">0</span></strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                                <div class="step-title">
+
+                                    <label class="one_page_heading">CIVIL LIABILITY INSURANCE FEE</label>
+                                </div>
+
+                            </td>
+                            <td>
+                                <strong><span id="txtCilviInsuranceFee">0</span></strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="step-title">
+
+                                    <label>TESTING FEE </label>
+                                </div>
+                            </td>
+                            <td>
+                                <strong>  <span id="txtTestingFee">0</span></strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="step-title">
+
+                                    <label>REGISTRATION PLATE FEE</label>
+                                </div>
+                            </td>
+                            <td>
+                                <strong> <span id="txtRegistrationPlateFee">0</span></strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                                <div class="step-title">
+                                    <h3><strong>TOTAL <span></span></strong></h3>
+                                </div>
+                            </td>
+                            <td>
+                               <h3><strong><span id="txtTotal">0</span></strong></h3> 
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <aside class="col-right sidebar col-sm-5 wow bounceInUp animated animated">
+                <div class="block block-company">
+                   
+                        <img id="image" style="width:518px;height:400px" src="" />
+
+                 
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>

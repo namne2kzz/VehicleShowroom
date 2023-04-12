@@ -1,0 +1,75 @@
+﻿@model List<Model.EF.Image>
+@{
+
+    Layout = "~/Areas/BranchDealer/Views/Shared/_Layouts.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom - Image Management
+}
+
+@section header{
+    List Image of Vehicle
+}
+@section jsFooter{
+
+    <script src="~/Assets/dealer/js/controller/ImageController.js"></script>
+}
+
+<div class="card shadow mb-4">
+
+
+    @using (Html.BeginForm("Create", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <div class="row" style="margin:20px 20px 20px 10px;">
+        <div class="col-lg-6">
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                    <input type="hidden" name="vehicleId" value="@ViewBag.VehicleId" />
+                    <img style="height:300px;width:350px;margin-bottom:20px" src="#" id="showImg" />
+                    <input type="file" class="form-control bg-light border-0 small" name="uploadImage" id="loadImg" value="Add Image" aria-label="Search" aria-describedby="basic-addon2">
+
+                </div>
+            </form>
+
+        </div>
+        <div @*class="input-group-append"*@>
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-save fa-sm">&nbsp; Save</i>
+            </button>
+        </div>
+
+    </div>
+    }
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>                      
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (Model.EF.Image item in Model)
+                    {
+                    <tr id="row_@item.ID">
+                        <td>
+                            <a href="#" class="btnDelete" data-vehicleId="@item.VehicleID" data-id="@item.ID">Delete</a>
+                        </td>
+                        <td>
+                            <img src="~/Assets/dealer/img/vehicle/@item.Image1" style="width:100px;height:100px" />
+                        </td>
+                        <td><a href="#" class="ui-btn-active" data-id="@item.ID">@(item.Status ? "Main" : "Extra")</a></td>
+
+                    </tr>
+                    }
+                </tbody>
+            </table>          
+        </div>
+    </div>
+</div>
+

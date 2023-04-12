@@ -1,0 +1,537 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var vehicle1 = (Model.ViewModel.CompareViewModel)ViewBag.Vehicle1;
+    var vehicle2 = (Model.ViewModel.CompareViewModel)ViewBag.Vehicle2;
+    var vehicle3 = (Model.ViewModel.CompareViewModel)ViewBag.Vehicle3;
+}
+
+@section title{
+    XBOX Vehicle Showroom
+}
+
+<div class="page-heading">   
+    <div class="page-title">
+        <h2>Compare Cars</h2>
+    </div>
+</div>
+
+
+<!-- BEGIN Main Container -->
+
+<div class="main-container col1-layout wow bounceInUp animated animated" style="visibility: visible;">
+
+    <div class="main">
+        <div class="container">
+            <div class="b-compare-images">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4 col-xs-12 col-md-offset-3">
+                       
+                            <div>
+                                <h3>@(vehicle1 !=null? vehicle1.Name: "null")</h3>
+                                <img src=@(vehicle1 !=null? "/Assets/dealer/img/vehicle/" + vehicle1.Image:"") alt="image">
+                                <div class="b-compare-price"><div class="b-compare__images-item-price-vs">vs</div>$@(vehicle1 !=null? vehicle1.Price.ToString("N0"): "null")</div>
+                            </div>
+                        
+
+                    </div>
+                    <div class="col-md-3 col-sm-4 col-xs-12 ">
+                      
+                            <div>
+                                <h3>@(vehicle2 !=null? vehicle2.Name: "null")</h3>
+                                <img src=@(vehicle2 !=null? "/Assets/dealer/img/vehicle/" + vehicle2.Image:"")  alt="image">
+                                <div class="b-compare-price"><div class="b-compare__images-item-price-vs">vs</div>$@(vehicle2 !=null? vehicle2.Price.ToString("N0"): "null")</div>
+                            </div>
+                       
+                    </div>
+                    <div class="col-md-3 col-sm-4 col-xs-12">
+                       
+                            <div>
+                                <h3>@(vehicle3 !=null? vehicle3.Name: "null")</h3>
+                                <img src=@(vehicle3 !=null? "/Assets/dealer/img/vehicle/" + vehicle3.Image:"")  alt="image">
+                                <div class="b-compare-price"><div class="b-compare__images-item-price-vs">vs</div>$@(vehicle3 !=null? vehicle3.Price.ToString("N0"): "null")</div>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="b-compare-block">
+                <h2 style="background: #50b2fc;">Basic Information</h2>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Description
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.Description: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.Description: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.Description: "null")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Detail
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.Detail: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.Detail: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.Detail: "null")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Brand
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.BrandName: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.BrandName: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle2.BrandName: "null")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Make / Year
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.Model: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.Model: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.Model: "null")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Color
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.Color: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.Color: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.Color: "null")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Style
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.Style: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.Style: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.Style: "null")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Origin
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.Origin: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.Origin: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.Origin: "null")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Seat
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.Seat.ToString(): "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.Seat.ToString(): "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.Seat.ToString(): "null")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="b-compare-block">
+                <h2>MECHANICAL FEATURES</h2>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Fuel Type
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.FuelType: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.FuelType: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.FuelType: "null")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                           Mileage
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.Mileage: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.Mileage: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.Mileage: "null")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                          Engine Displacement
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.EngineDispl: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.EngineDispl: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.EngineDispl: "null")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                           Transmission
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.Transmission: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.Transmission: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.Transmission: "null")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Foglamps
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle1 !=null? vehicle1.FogLamps: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle2 !=null? vehicle2.FogLamps: "null")
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @(vehicle3 !=null? vehicle3.FogLamps: "null")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="b-compare-block">
+                <h2 style="background-color: #3e6274;">EXTERIOR / INTERIOR FEATURES</h2>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                          Power Window
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle1 != null)
+                            {
+                                @(vehicle1.PowerWindow ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle2 != null)
+                            {
+                                @(vehicle2.PowerWindow ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle3 != null)
+                            {
+                                @(vehicle3.PowerWindow ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Airbags
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle1 != null)
+                            {
+                                @(vehicle1.Airbags ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle2 != null)
+                            {
+                                @(vehicle2.Airbags ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle3 != null)
+                            {
+                                @(vehicle3.Airbags ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            ABS
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle1 != null)
+                            {
+                                @(vehicle1.ABS ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle2 != null)
+                            {
+                                @(vehicle2.ABS ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle3 != null)
+                            {
+                                @(vehicle3.ABS ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-title">
+                            Central Locking
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle1 != null)
+                            {
+                                @(vehicle1.CentralLocking ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle2 != null)
+                            {
+                                @(vehicle2.CentralLocking ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <div class="b-compare__block-inside-value">
+                            @if (vehicle3 != null)
+                            {
+                                @(vehicle3.CentralLocking ==true? "Standard": "Optional")
+                            }
+                            else
+                            {
+                                <span>null</span>
+                            }
+                        </div>
+                    </div>
+                </div>                
+            </div>
+
+
+
+        </div>
+    </div><!--main-container-->
+
+</div> <!--col1-layout-->

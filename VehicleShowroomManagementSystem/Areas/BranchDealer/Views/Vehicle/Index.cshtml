@@ -1,0 +1,103 @@
+﻿@model PagedList.IPagedList<Model.EF.Vehicle>
+@using PagedList.Mvc;
+@{
+
+    Layout = "~/Areas/BranchDealer/Views/Shared/_Layouts.cshtml";
+}
+
+
+@section title{
+    XBOX Vehicle Showroom - Vehicle Management
+}
+
+@section header{
+    List Vehicle
+}
+@section jsFooter{
+  
+    <script src="~/Assets/dealer/js/controller/VehicleController.js"></script>
+}
+
+<div class="card shadow mb-4">
+
+
+    @using (Html.BeginForm("Index", "Vehicle", FormMethod.Get))
+    {
+        <div class="row" style="margin:20px 20px 20px 10px;">
+            <div class="col-lg-4">
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search here..." name="searchString" value="@ViewBag.SearchKeyword" aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-lg-4 ">
+                <a href="/BranchDealer/Vehicle/Create" class="btn btn-primary">Create</a>
+            </div>
+            <div class="col-lg-4">
+                @using (Html.BeginForm("Index", "Vehicle", FormMethod.Post))
+                {
+
+                    @Html.AntiForgeryToken()
+                    <div class="col-lg-4">
+                        <div style="width:300px;" class="form-group">
+                            @Html.DropDownList("BrandID", ViewBag.Brand as SelectList, "--All Brand--", new { @class = "form-control bg-light border-0 small", @id = "brandID", onchange = "this.form.submit();" })
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    }
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th style="width:25%">#</th>
+                        <th>Vehicle Name</th>
+                        <th>Seat</th>
+                        <th>Style</th>
+                        <th>Color</th>
+                        <th>Historical Cost</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (Model.EF.Vehicle item in Model)
+                    {
+                        <tr id="row_@item.ID">
+                            <td>
+                                <a href="@Url.Action("Index","Image",new { vehicleId=item.ID })">Image</a>                               
+                                |
+                                <a href="/BranchDealer/Vehicle/Edit/@item.ID">Update</a>
+                                |
+                                <a href="#" class="btnDelete" data-id="@item.ID">Delete</a>
+
+                            </td>
+                            <td>@item.Name</td>
+                            <td>@item.Seat</td>
+                            <td>@item.Style</td>
+                            <td>@item.Color</td>
+                            <td>$@item.HistoricalCost.ToString("N0")</td>
+                            <td>$@item.Price.ToString("N0")</td>
+                            <td><a href="#" class="ui-btn-active" data-id="@item.ID">@(item.Status ? "Active" : "Lock")</a></td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+        </div>
+    </div>
+</div>
+

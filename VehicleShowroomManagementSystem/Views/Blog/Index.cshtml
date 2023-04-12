@@ -1,0 +1,208 @@
+﻿@model List<Model.ViewModel.BlogDealer>
+@{
+    var newDealer = (IEnumerable<Model.EF.Dealer>)ViewBag.NewDealer;
+    var listVehicleByBrand = (List<VehicleShowroomManagementSystem.Models.CountVehicleByBrand>)ViewBag.CountVehicleByBrand;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom
+}
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title">
+                    <h2>Blog</h2>
+                </div>
+            </div>
+            <!--col-xs-12-->
+        </div>
+        <!--row-->
+    </div>
+    <!--container-->
+</div>
+<!-- BEGIN Main Container -->
+<div class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <div class="col-left sidebar col-sm-3 blog-side">
+                @using (Html.BeginForm("Index", "Blog", FormMethod.Get))
+                {
+                    <div class="block widget_search">
+                        <form id="searchform" action="#" method="get">
+                            <div class="input-group">
+                                <input type="text" name="searchString"  placeholder="Search For" class="input-text" value="@ViewBag.SearchKeyword">
+                                <div class="input-group-append">
+                                    <button type="submit" class="thm-search"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                }
+
+                <div id="secondary" class="widget_wrapper13" role="complementary">
+                    <div id="recent-posts-4" class="popular-posts widget block" style="visibility: visible;">
+                        <h2 class="widget-title">New Dealer</h2>
+                        <ul class="posts-list unstyled clearfix">
+                            @foreach (var item in newDealer)
+                            {
+                                <li>
+                                    <figure class="featured-thumb"> <a href="#"> <img src="~/Assets/showroom/img/dealer/@item.Avatar"> </a> </figure>
+                                    <!--featured-thumb-->
+                                    <div class="content-info">
+                                        <h4><a href="#" title="Lorem ipsum dolor sit amet">@item.DealerName</a></h4>
+                                        <p class="post-meta">
+                                            <time class="entry-date">@item.Email</time>
+                                            <time class="entry-date">@item.Phone</time>
+                                        </p>
+                                    </div>
+                                </li>
+                            }
+
+
+                        </ul>
+
+                        <!--widget-content-->
+                    </div>
+                    <div id="categories-2" class="widget widget_categories block" style="visibility: visible;">
+                        <h2 class="widget-title">Brands</h2>
+
+                        <ul>
+                            @foreach (var item in listVehicleByBrand)
+                            {
+                                <li><a href="#">@item.Name</a> <span class="count">@item.Quantity</span></li>
+                            }
+
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-main col-sm-9 main-blog">
+                <div id="main" class="blog-wrapper">
+                    <div id="primary" class="site-content">
+                        <div id="content" role="main">
+                            @foreach (var item in Model)
+                            {
+                                <article id="post-29" class="blog_entry clearfix wow bounceInUp animated animated animated" style="visibility: visible;">
+
+                                    <div class="entry-content">
+                                        <div class="featured-thumb"><a href="#"><img src="~/Assets/showroom/img/blog/@item.Image" alt="blog-img3"></a></div>
+                                        <header class="blog_entry-header clearfix">
+                                            <div class="blog_entry-header-inner">
+                                                <h2 class="blog_entry-title"> <a href="blog-detail.html" rel="bookmark">@item.Name</a> </h2>
+
+                                            </div>
+                                            <!--blog_entry-header-inner-->
+                                        </header>
+                                        <div class="entry-content">
+                                            <ul class="post-meta">
+                                                <li><i class="fa fa-user"></i>posted by <a href="#">@item.DealerName</a> </li>
+                                                <li><i class="fa fa-clock-o"></i><span>@item.CreatedDate.ToShortDateString()</span></li>
+                                            </ul>
+                                            <div class="blog_entry-header-inner">
+                                                <span> @item.Description</span>
+
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </article>
+                            }
+
+
+                        </div>
+                    </div>
+                    <div class="pager">
+                        @if (ViewBag.TotalPage > 1)
+                        {
+                            var pageDisplay = (int)(ViewBag.MaxPage);//hien thi 5 trang
+                            int totalPage = (int)ViewBag.TotalPage;//tongr co 2 trang
+                            int currentPage = (ViewBag.Page != null ? (int)ViewBag.Page : 1);
+
+
+                            //var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+                            //var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+                            var startPageIndex = currentPage - (int)pageDisplay / 2;
+                            var endPageIndex = currentPage + (int)pageDisplay / 2;
+
+                            if (startPageIndex <= 0)
+                            {
+                                endPageIndex -= (startPageIndex - 1);
+                                startPageIndex = 1;
+                            }
+                            if (endPageIndex > totalPage)
+                            {
+                                endPageIndex = totalPage;
+                                if (endPageIndex > pageDisplay)
+                                {
+                                    startPageIndex = endPageIndex - (pageDisplay - 1);
+                                }
+                            }
+
+                            var link = "/Blog/Index";
+
+                            <div class="toolbar bottom">
+                                <span class="store-qty">Display from index <strong>@(ViewBag.PageSize*(@currentPage-1)+1)</strong> to index <strong>@((ViewBag.PageSize*@currentPage)-ViewBag.PageSize==0? (ViewBag.PageSize * currentPage):ViewBag.Total)</strong> in total <strong>@ViewBag.Total</strong> vehicles</span>
+                                @if (endPageIndex > 1)
+                                {
+
+                                    <div class="pages">
+                                        <ul class="pagination">
+                                            @if (currentPage > 1)
+
+
+                                            {
+                                                <li>
+                                                    <a href="@link?pageIndex=@ViewBag.First" title="First"><i class="fa fa-angle-double-left"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="@link?pageIndex=@(currentPage-1)" title="Previous"><i class="fa fa-angle-left"></i></a>
+                                                </li>
+                                            }
+
+                                            @for (var page = startPageIndex; page <= endPageIndex; page++)
+                                            {
+                                                <li @(page == currentPage ? "class=active" : "")>
+                                                    <a href="@link?pageIndex=@page">@page</a>
+                                                </li>
+                                            }
+                                            @if (currentPage < ViewBag.TotalPage)
+                                            {
+                                                <li>
+                                                    <a href="@link?pageIndex=@(currentPage+1)" title="Next"><i class="fa fa-angle-right"></i></a>
+                                                </li>
+                                                <li>
+                                                    <a href="@link?pageIndex=@totalPage" title="Last"><i class="fa fa-angle-double-right"></i></a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+
+                                }
+
+
+                            </div>
+                        }
+                        else if (ViewBag.Total == 0)
+                        {
+                            <h1><span>No Record</span></h1>
+                        }
+                    </div>
+                </div>
+                <!--#main wrapper grid_8-->
+
+            </div>
+            <!--col-main col-sm-9-->
+        </div>
+    </div>
+    <!--main-container-->
+
+</div>
+<!--col2-layout--> 

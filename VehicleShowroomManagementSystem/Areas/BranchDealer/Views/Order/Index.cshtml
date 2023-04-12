@@ -1,0 +1,97 @@
+﻿@model PagedList.IPagedList<Model.EF.Order>
+@using PagedList.Mvc;
+@{
+
+    Layout = "~/Areas/BranchDealer/Views/Shared/_Layouts.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom - Order Management
+}
+
+@section header{
+    List Sales Order From Customer
+}
+@section jsFooter{
+
+    <script src="~/Assets/dealer/js/controller/OrderController.js"></script>
+}
+
+<div class="card shadow mb-4">
+
+
+    @using (Html.BeginForm("Index", "Order", FormMethod.Get))
+    {
+        <div class="row" style="margin:20px 20px 20px 10px;">
+            <div class="col-lg-4">
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search here..." name="searchString" value="@ViewBag.SearchKeyword" aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    }
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ordered Date</th>
+                        <th>Recieved Name</th>
+                        <th>Recieved Address</th>
+                        <th>Recieved Email</th>
+                        <th>Recieved Phone</th>
+                        <th>Quantity</th>
+                        <th>Total Cost</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (Model.EF.Order item in Model)
+                    {
+                        <tr id="row_@item.ID">
+                            <td>
+                                <a href="/BranchDealer/Order/Detail/@item.ID">Detail</a>
+                                |
+                                <a href="#" class="btnDelete" data-id="@item.ID">Delete</a>
+
+                            </td>
+                            <td>@item.OrderedDate.ToShortDateString()</td>
+                            <td>@item.ReceivedName</td>
+                            <td>@item.ReceivedAddress</td>
+                            <td>@item.ReceivedEmail</td>
+                            <td>@item.ReceivedMobile</td>
+                            <td>@item.Quantity</td>
+                            <td>$@item.TotalCost.ToString("N0")</td>
+                            <td>
+                                @using (Html.BeginForm("ChangeStatus", "Order", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken();
+
+                                    <div class="form-group">
+                                        @Html.DropDownList("Status", new SelectList(ViewBag.ListStatus, "Value", "Text", item.Status), new { @class = "form-control", @id = item.ID, onchange = "this.form.submit();" })
+                                        @Html.Hidden("id", item.ID)
+                                    </div>
+
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+        </div>
+    </div>
+</div>
+

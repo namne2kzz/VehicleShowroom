@@ -1,0 +1,125 @@
+﻿@model VehicleShowroomManagementSystem.Models.LoginModel
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom
+}
+
+@section jsFooter{
+
+    <script src="~/Assets/client/js/controller/LoginController.js"></script>
+}
+@if (TempData["msg"] != null)
+{
+    @Html.Raw(TempData["msg"])
+}
+
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title">
+                    <h2>Login or Create an Account</h2>
+                </div>
+            </div>
+            <!--col-xs-12-->
+        </div>
+        <!--row-->
+    </div>
+    <!--container-->
+</div>
+
+
+<!-- BEGIN Main Container -->
+
+<div class="main-container col1-layout wow bounceInUp animated animated" style="visibility: visible;">
+
+    <div class="main">
+        <div class="account-login container">
+            <!--page-title-->
+
+            <form action="#" method="post" id="login-form">
+                <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
+                <fieldset class="col2-set">
+                    <div class="col-1 new-users">
+                        <strong>New Customers</strong>
+                        <div class="content">
+
+                            <p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
+                            <div class="buttons-set">
+                                <a href="/Customer/Register" title="Create an Account" class="button create-account"><span><span>Create an Account</span></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 registered-users">
+                        <strong>Login</strong>
+                        <div class="content">
+
+                            <p>If you have an account with us, please log in.</p>
+
+                            @using (Html.BeginForm("Login", "Customer", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <ul class="form-list">
+                                    <li>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @id = "txtUserName" })
+                                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2 input-text required-entry validate-email" })
+                                            <div class="col-md-10">
+                                                @Html.PasswordFor(model => model.Password, new { @class = "form-control input-text required-entry validate-password", @id = "txtPassword" })
+                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="group-select">
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-10">
+                                                @Html.CheckBoxFor(model => model.RememberMe) &nbsp;Remember Me
+                                            </div>
+
+
+                                        </div>
+                                    </li>
+                                </ul>
+
+                                <div class="buttons-set">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <button type="submit" class="button login" title="Login"><span>Login</span></button>
+                                        </div>                                      
+                                    </div>
+
+
+                                </div>
+
+
+                            }
+
+                        </div> <!--content-->
+                    </div> <!--col-2 registered-users-->
+                </fieldset> <!--col2-set-->
+            </form>
+
+        </div> <!--account-login-->
+
+    </div><!--main-container-->
+
+</div> <!--col1-layout-->

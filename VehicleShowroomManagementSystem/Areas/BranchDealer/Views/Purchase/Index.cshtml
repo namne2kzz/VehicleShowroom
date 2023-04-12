@@ -1,0 +1,82 @@
+﻿@model PagedList.IPagedList<Model.EF.Purchase>
+@using PagedList.Mvc;
+@{
+
+    Layout = "~/Areas/BranchDealer/Views/Shared/_Layouts.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom - Purchase Management
+}
+
+@section header{
+    List Purchase Information from Company
+}
+@section jsFooter{
+
+    <script src="~/Assets/dealer/js/controller/PurchaseController.js"></script>
+}
+
+<div class="card shadow mb-4">
+
+    @using (Html.BeginForm("Index", "Purchase", FormMethod.Get))
+    {
+        <div class="row" style="margin:20px 20px 20px 10px;">
+            <div class="col-lg-4">
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search here..." name="searchString" value="@ViewBag.SearchKeyword" aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-lg-6 ">
+                <a href="/Branchdealer/Purchase/Create" class="btn btn-primary">Create</a>
+            </div>
+        </div>
+    }
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date Of Purchase</th>
+                        <th>Date Of Receive</th>
+                        <th>Received Name</th>
+                        <th>Quantity</th>
+                        <th>Total Cost</th>
+                       
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (Model.EF.Purchase item in Model)
+                    {
+                        <tr id="row_@item.ID">
+                            <td>
+                                <a href="/BranchDealer/Purchase/Billing/@item.ID">Bill</a>                                                            
+                                |
+                                <a href="#" class="btnDelete" data-id="@item.ID">Delete</a>
+
+                            </td>
+                            <td>@item.CreatedDate.ToShortDateString()</td>
+                            <td>@item.ReceivedDate.Value.ToShortDateString()</td>
+                            <td>@item.ReceivedName</td>
+                            <td>@item.Quantity</td>
+                            <td>$@item.TotalCost.ToString("N0")</td>                           
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+        </div>
+    </div>
+</div>

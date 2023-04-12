@@ -1,0 +1,81 @@
+﻿@model PagedList.IPagedList<Model.EF.Contact>
+@using PagedList.Mvc;
+@{
+
+    Layout = "~/Areas/Showroom/Views/Shared/_Layouts.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom - Contact Information Management
+}
+
+@section header{
+    List Contact Information of Customer
+}
+@section jsFooter{
+
+    <script src="~/Assets/showroom/js/controller/ContactController.js"></script>
+}
+
+<div class="card shadow mb-4">
+
+    @using (Html.BeginForm("Index", "Contact", FormMethod.Get))
+    {
+        <div class="row" style="margin:20px 20px 20px 10px;">
+            <div class="col-lg-4">
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search here..." name="searchString" value="@ViewBag.SearchKeyword" aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>           
+        </div>
+    }
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Content</th>
+                        <th>Province</th>
+                        <th>Created Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (Model.EF.Contact item in Model)
+                    {
+                    <tr id="row_@item.ID">
+                        <td>
+                            <a href="#" class="btnDelete" data-id="@item.ID">Delete</a>
+
+                        </td>
+                        <td>@item.Name</td>
+                        <td>@item.Email</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Content</td>
+                        <td>@item.Province</td>
+                        <td>@item.CreatedDate.ToShortDateString()</td>
+                        <td><a href="#" class="ui-btn-active" data-id="@item.ID">@(item.Status ? "Active" : "Lock")</a></td>
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+        </div>
+    </div>
+</div>
+

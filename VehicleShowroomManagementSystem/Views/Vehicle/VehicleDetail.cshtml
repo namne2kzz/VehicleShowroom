@@ -1,0 +1,395 @@
+﻿@model Model.ViewModel.VehicleDetailModel
+
+@{
+    var service = (List<Model.EF.Service>)ViewBag.Service;
+    var image = (List<Model.EF.Image>)ViewBag.Image;
+    var review = (List<Model.ViewModel.ReviewCustomer>)ViewBag.Review;
+    var related = (List<Model.ViewModel.ImageVehicle>)ViewBag.Related;
+    var customerSession = (VehicleShowroomManagementSystem.Models.UserLogin)Session[Common.Constants.USER_SESSION];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom
+}
+
+<div class="page-heading">
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul>
+                        <li class="home"> <a href="/" title="Go to Home Page">Home</a> <span>&rsaquo; </span> </li>
+                        <li class="home"> <a href="@Url.Action("ListVehicleByDealer","Vehicle",new { dealerId=Model.DealerID})" title="Go to Dealer">@Model.DealerName</a> <span>&rsaquo; </span> </li>
+                        <li class="category1601"> <strong>@Model.Name</strong> </li>
+                    </ul>
+                </div>
+                <!--col-xs-12-->
+            </div>
+            <!--row-->
+        </div>
+        <!--container-->
+    </div>
+    <div class="page-title">
+        <h2>VEHICLE DETAIL</h2>
+    </div>
+</div>
+<!-- BEGIN Main Container -->
+<div class="main-container col1-layout wow bounceInUp animated">
+    <div class="main">
+        <div class="col-main">
+            <!-- Endif Next Previous Product -->
+            <div class="product-view wow bounceInUp animated" itemscope="" itemtype="http://schema.org/Product" itemid="#product_base">
+                <div id="messages_product_view"></div>
+                <!--product-next-prev-->
+                <div class="product-essential container">
+                    <div class="row">
+                        <form action="#" method="post" id="product_addtocart_form">
+                            <!--End For version 1, 2, 6 -->
+                            <!-- For version 3 -->
+                            <div class="product-img-box col-lg-5 col-sm-5 col-xs-12">
+                                <div class="new-label new-top-left">Hot</div>
+                                <div class="sale-label sale-top-left">-15%</div>
+                                <div class="product-image">
+                                    <div class="product-full"> <img id="product-zoom1" src="/Assets/dealer/img/vehicle/@Model.Image" data-zoom-image="/Assets/dealer/img/vehicle/@Model.Image" alt="@Model.Name" /> </div>
+                                    <div class="more-views">
+                                        <div class="slider-items-products">
+                                            <div id="gallery_02" class="product-flexslider hidden-buttons product-img-thumb">
+                                                <div class="slider-items slider-width-col4 block-content">
+                                                    @foreach (var item in image)
+                                                    {
+                                                        <div class="more-views-items"> <a href="#" data-image="/Assets/dealer/img/vehicle/@item.Image1" data-zoom-image="/Assets/dealer/img/vehicle/@item.Image1"> <img id="product-zoom0" src="/Assets/dealer/img/vehicle/@item.Image1" alt="@Model.Image" /> </a></div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end: more-images -->
+                                <div class="toll-free"><a href="#"><i class="fa fa-phone"></i> +1 800 789 0000</a></div>
+                                <div class="ask-question"><a href="/Contact/Index"><i class="fa fa-question"></i> Ask a Question</a></div>
+                                <div class="request-call"><a href="/Vehicle/FinanceCalculator"><i class="fa fa-money"></i> Finance Calculator</a></div>
+                            </div>
+                            <!--End For version 1,2,6-->
+                            <!-- For version 3 -->
+                            <div class="product-shop col-lg- col-sm-7 col-xs-12">
+                                <div class="brand">@Model.BrandName</div>
+                                <div class="product-name">
+                                    <h1>@Model.Name </h1>
+                                    <p style="position:absolute" class="special-price"> <span class="price-label">Sale Off</span><i style="color: #ed6663" class="fa fa-tag fa-2x"></i> <span id="product-price-48" class="price">@(Model.SaleOff*100)% </span> </p><br />
+                                </div>
+                                <div class="ratings">
+                                    <div class="rating-box">
+                                        <div style="width:100%" class="rating"></div>
+                                    </div>
+                                    <p class="rating-links"> <a href="#">@review.Count Review</a> <span class="separator">|</span> <a href="#">Add Your Review</a> </p>
+                                </div>
+                                <div class="price-block">
+                                    <div class="price-box">
+                                        <p class="special-price"> <span class="price-label">Old Price</span> <span style="text-decoration: line-through #ed6663 3px;" id="product-price-48" class="price">$@Model.Price</span> </p> &nbsp;
+                                        <p class="special-price"> <span class="price-label">Special Price</span> <span id="product-price-48" class="price">$@(((decimal)(1-Model.SaleOff)*Model.Price).ToString("N0"))</span> </p>
+
+                                    </div>
+                                </div>
+
+                                <div class="spec-row" id="summarySpecs">
+                                    <h2>Specifications</h2>
+                                    <table width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td class="label-spec"> Style <span class="coln">:</span></td>
+                                                <td class="value-spec"> @Model.Style </td>
+                                            </tr>
+                                            <tr class="odd">
+                                                <td class="label-spec"> Color <span class="coln">:</span></td>
+                                                <td class="value-spec"> @Model.Color </td>
+                                            </tr>
+                                            <tr class="odd">
+                                                <td class="label-spec"> Origin <span class="coln">:</span></td>
+                                                <td class="value-spec"> @Model.Origin </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="label-spec"> Mileage <span class="coln">:</span></td>
+                                                <td class="value-spec"> @Model.Mileage kmpl </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="label-spec"> Engine Displ. <span class="coln">:</span></td>
+                                                <td class="value-spec"> @Model.EngineDispl kw </td>
+                                            </tr>
+                                            <tr class="odd">
+                                                <td class="label-spec"> Transmission <span class="coln">:</span></td>
+                                                <td class="value-spec"> @Model.Transmission </td>
+                                            </tr>
+                                            <tr class="odd">
+                                                <td class="label-spec"> Fuel Type <span class="coln">:</span></td>
+                                                <td class="value-spec"> @Model.FuelType </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="label-spec"> Model <span class="coln">:</span></td>
+                                                <td class="value-spec"> @Model.Model </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="label-spec"> Power Windows <span class="coln">:</span></td>
+                                                <td class="value-spec"> @(Model.PowerWindow !=true?"Standard":"Optional") </td>
+                                            </tr>
+                                            <tr class="odd">
+                                                <td class="label-spec"> Airbags <span class="coln">:</span></td>
+                                                <td class="value-spec"> @(Model.Airbags !=true?"Standard":"Optional")  </td>
+                                            </tr>
+                                            <tr class="odd">
+                                                <td class="label-spec"> ABS <span class="coln">:</span></td>
+                                                <td class="value-spec"> @(Model.ABS !=true?"Standard":"Optional")  </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="label-spec"> Central Locking <span class="coln">:</span></td>
+                                                <td class="value-spec"> @(Model.CentralLocking !=true?"Standard":"Optional")  </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="label-spec"> Fog Lamps <span class="coln">:</span></td>
+                                                <td class="value-spec"> @Model.FogLamps </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="email-addto-box">
+                                    <ul class="add-to-links">
+                                        <li  > <a style="padding-block:10px;padding-right:30px; padding-left:30px;" class="button" href="@(customerSession==null?"/Customer/Login":"/Cart/AddItem?vehicleId="+Model.ID) "><i class="fa fa-shopping-cart"></i> <span >Add to Cart</span></a></li>
+                                        <li><a style="padding-block:10px;padding-right:30px; padding-left:30px;" class="button" href="@(Url.Action("AddCompare","Vehicle",new { vehicleId=Model.ID }))"><i class="fa fa-bar-chart"></i><span>Add to Compare</span></a></li>
+                                    </ul>
+                                </div>
+                                <br>
+                                <div class="social">
+                                    <ul class="link">
+                                        <li class="fb"><a href="#"></a></li>
+                                        <li class="tw"><a href="#"></a></li>
+                                        <li class="googleplus"><a href="#"></a></li>
+                                        <li class="rss"><a href="#"></a></li>
+                                        <li class="pintrest"><a href="#"></a></li>
+                                        <li class="linkedin"><a href="#"></a></li>
+                                        <li class="youtube"><a href="#"></a></li>
+                                    </ul>
+                                </div>
+                                <ul class="shipping-pro">
+                                    @foreach (var item in service)
+                                    {
+                                        <li>@item.Name</li>
+                                    }
+                                </ul>
+                            </div>
+                            <!--product-shop-->
+                            <!--Detail page static block for version 3-->
+                        </form>
+                    </div>
+                </div>
+                <!--product-essential-->
+                <div class="product-collateral container">
+                    <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
+                        <li> <a href="#product_tabs_custom1" data-toggle="tab">Description</a> </li>
+                        <li class="active"> <a href="#product_tabs_description" data-toggle="tab"> Vehicle Overview </a> </li>
+                        <li> <a href="#product_tabs_custom" data-toggle="tab">Accessories</a> </li>
+                        <li> <a href="#reviews_tabs" data-toggle="tab">Reviews</a> </li>
+
+                    </ul>
+                    <div id="productTabContent" class="tab-content">
+                        <div class="tab-pane fade" id="product_tabs_custom1">
+                            <div class="product-tabs-content-inner clearfix">
+                                <p>@Model.Description</p>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade in active" id="product_tabs_description">
+                            <div class="std">
+                                <p>@Model.Detail</p>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="product_tabs_custom">
+                            <div class="spec-row" id="summarySpecs">
+                                <table width="100%">
+                                    <tbody>
+                                        <tr>
+                                            <td class="label-spec"> Air Conditioner <span class="coln">:</span></td>
+                                            <td class="value-spec"> <i class="fa fa-check-circle"></i> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label-spec"> AntiLock Braking System <span class="coln">:</span></td>
+                                            <td class="value-spec"> <i class="fa fa-check-circle"></i> </td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td class="label-spec"> Power Steering <span class="coln">:</span></td>
+                                            <td class="value-spec"> <i class="fa fa-check-circle"></i> </td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td class="label-spec"> Power Windows <span class="coln">:</span></td>
+                                            <td class="value-spec"> <i class="fa fa-check-circle"></i> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label-spec"> CD Player <span class="coln">:</span></td>
+                                            <td class="value-spec"> <i class="fa fa-check-circle"></i> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label-spec"> Leather Seats <span class="coln">:</span></td>
+                                            <td class="value-spec"> <i class="fa fa-check-circle"></i> </td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td class="label-spec"> Central Locking <span class="coln">:</span></td>
+                                            <td class="value-spec"> <i class="fa fa-check-circle"></i> </td>
+                                        </tr>
+                                        <tr class="odd">
+                                            <td class="label-spec"> Power Door Locks <span class="coln">:</span></td>
+                                            <td class="value-spec"> <i class="fa fa-check-circle"></i> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label-spec"> Brake Assist <span class="coln">:</span></td>
+                                            <td class="value-spec"> <i class="fa fa-check-circle"></i> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label-spec"> Driver Airbag <span class="coln">:</span></td>
+                                            <td class="value-spec"> <i class="fa fa-check-circle"></i> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="reviews_tabs">
+                            <div class="woocommerce-Reviews">
+                                <div>
+                                    <h2 class="woocommerce-Reviews-title">@review.Count reviews for <span>@Model.Name</span></h2>
+                                    <ol class="commentlist">
+                                        @foreach (var item in review)
+                                        {
+                                            <!-- #comment-## -->
+                                            <li class="comment">
+                                                <div>
+                                                    <img alt="" src="~/Assets/showroom/img/customer/@item.Avater" class="avatar avatar-60 photo">
+                                                    <div class="comment-text">
+                                                        <div class="ratings">
+                                                            <div class="rating-box">
+                                                                <div style="width:100%" class="rating"></div>
+                                                            </div>
+                                                        </div>
+                                                        <p class="meta"> <strong>@item.CustomerName</strong> <span>–</span> @(item.CreatedDate.ToShortDateString())</p>
+                                                        <div class="description">
+                                                            <p>@item.Content</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <!-- #comment-## -->
+                                        }
+
+                                    </ol>
+                                </div>
+                                <div>
+                                    <div>
+                                        <div class="comment-respond">
+                                            <span class="comment-reply-title">Add a review </span>
+                                            @using (Html.BeginForm("AddReview", "Vehicle", FormMethod.Post))
+                                            {
+
+
+
+                                                <div class="review-form">
+                                                    <input type="hidden" name="vehicleId" value="@Model.ID" />
+                                                    <textarea id="txtComment" name="content" class="input" placeholder="Your Review"></textarea>
+
+
+
+
+                                                </div>
+                                                if (customerSession != null)
+                                                {
+                                                    <button type="submit" style="padding-block:10px;padding-right:30px; padding-left:30px;" class="button">Submit</button>
+                                                }
+
+
+                                            }
+                                        </div>
+                                        <!-- #respond -->
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!--product-collateral-->
+                <div class="box-additional">
+                    <!-- BEGIN RELATED PRODUCTS -->
+                    <div class="related-pro container">
+                        <div class="slider-items-products">
+                            <div class="new_title center">
+                                <h2>Related Vehicle</h2>
+                            </div>
+                            <div id="related-slider" class="product-flexslider hidden-buttons">
+                                <div class="slider-items slider-width-col4 products-grid">
+                                    @foreach (var item in related)
+                                    {
+                                        <!-- Item -->
+                                        <div class="item">
+                                            <div class="item-inner">
+                                                <div class="item-img">
+                                                    <div class="item-img-info">
+                                                        <a href="@Url.Action("VehicleDetail","Vehicle",new { vehicleId = item.VehicleID })" title="@item.VehicleName" class="product-image"><img style="height:200px;width:350px;" src="~/Assets/dealer/img/vehicle/@item.Image" alt="@item.VehicleName"></a>
+                                                        <div class="item-box-hover">
+                                                            <div class="box-inner">
+                                                                <div class="add_cart">
+                                                                    <div  type="button"><a class="button btn-cart" href="@(customerSession==null?"/Customer/Login":"/Cart/AddItem?vehicleId="+item.VehicleID)"></a></div>
+                                                                </div>
+                                                                <div class="product-detail-bnt"><a class="button detail-bnt"><span>Quick View</span></a></div>
+                                                                <div class="actions">
+                                                                    <span class="add-to-links"><a href="@Url.Action("AddCompare","Vehicle",new { vehicleId=item.VehicleID })" class="link-compare" title="Add to Compare"><span>Add to Compare</span></a> </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="info-inner">
+                                                        <div class="item-title"><a href="@Url.Action("VehicleDetail","Vehicle",new { vehicleId = item.VehicleID })" title="Retis lapen casen">@item.VehicleName</a> </div>
+                                                        <div class="item-content">
+                                                            <div class="rating">
+                                                                <div class="ratings">
+                                                                    <div class="rating-box">
+                                                                        <div class="rating" style="width:100%"></div>
+                                                                    </div>                                                                  
+                                                                </div>
+                                                            </div>
+                                                            <div class="item-price">
+                                                                <div class="price-box"><span class="regular-price"><span class="price">@item.Price</span> </span> </div>
+                                                            </div>
+                                                            <div class="other-info">
+                                                                <div class="col-km"><i class="fa fa-tachometer"></i> @item.Style</div>
+                                                                <div class="col-engine"><i class="fa fa-gear"></i> @item.Color</div>
+                                                                <div class="col-date"><i class="fa fa-calendar"></i> @item.Model</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Item -->
+                                    }
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end related product -->
+
+                </div>
+                <!-- end related product -->
+            </div>
+            <!--box-additional-->
+            <!--product-view-->
+        </div>
+    </div>
+    <!--col-main-->
+</div>
+

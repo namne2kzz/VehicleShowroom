@@ -1,0 +1,153 @@
+﻿@model List<Model.ViewModel.OrderDetailModel>
+@{
+    var i = 0;
+    var order = (Model.EF.Order)ViewBag.Order;
+    var dealer = (Model.EF.Dealer)ViewBag.Dealer;
+    var service = (List<Model.EF.Service>)ViewBag.Service;
+}
+
+@section title{
+    XBOX Vehicle Showroom - Sales Management
+}
+
+@section header{
+    Sales Order Document
+}
+
+<table>
+    <thead>
+        <tr>
+            <th colspan="2">
+               
+            </th>
+            <th colspan="2">
+                <h1 class=" m-0 font-weight-bold text-primary">SALES ORDER INVOICE</h1>
+            </th>
+            <th colspan="2">
+                <h3><strong>XBOX Vehicle Showroom</strong> <br /></h3>
+                Address: No.10 Hoa Binh Street, Ninh Kieu District, Can Tho City<br />
+                Email: sale.xboxshowroom@xmail.com<br />
+                Phone:02645468921<br />
+                Fax:1800468658-660<br />
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="3">
+                <h3><strong>Dealer Information</strong></h3>
+                Dealer Name: @dealer.DealerName<br />
+                Email:@dealer.Email<br />
+                Address: No.10 Hoa Binh Street, Ninh Kieu District, Can Tho City <br />
+                Tel: @dealer.Phone<br />
+                Account No.: 001 100 00389625- X Bank- Can Tho City Branch<br />
+            </td>
+            <td></td>
+            <td colspan="2">
+                <h3><strong>Customer Information</strong><br /></h3>
+                Customer Name: @order.ReceivedName<br />
+                Address: @order.ReceivedAddress<br />
+                Email: @order.ReceivedEmail<br />
+                Tel: @order.ReceivedMobile<br />
+                Date Of Order: @order.OrderedDate.ToShortDateString() <br />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td colspan="2"><h3>SALES ORDER DETAIL</h3></td>
+            <td colspan="2"></td>
+        </tr>
+    </tbody>
+
+</table>
+<div class="card-body">
+    <div class="table-responsive">
+        <table style="color: black" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Service Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (Model.EF.Service item in service)
+                {
+                    <tr>
+                        <td>@(i+=1)</td>
+                        <td>@item.Name</td>
+                        <td>@item.Description</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+      
+    </div>
+</div>
+<div class="card-body">
+    <div class="table-responsive">
+        <table style="color: black" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Vehicle Name</th>
+                    <th>Model Number</th>
+                    <th>Registration Fee</th>
+                    <th>Road Maintenance Fee</th>
+                    <th>Civil Liability Insurance Fee</th>
+                    <th>Testing Fee</th>
+                    <th>Registration Plate Fee</th>
+                    <th>Discount</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (Model.ViewModel.OrderDetailModel item in Model)
+                {
+                <tr>
+                    <td>@(i+=1)</td>
+                    <td>@item.VehicleName</td>
+                    <td>@item.ModelNumber</td>
+                    <td>$@item.RegistrationFee.ToString("N0")</td>
+                    <td>$@item.RoadMaintennanceFee.ToString("N0")</td>
+                    <td>$@item.CivilLiabilityInsuranceFee.ToString("N0")</td>
+                    <td>$@item.TestingFee.ToString("N0")</td>
+                    <td>$@item.RegistrationPlateFee.ToString("N0")</td>
+                    <td>$@item.SaleOff.ToString("N0")</td>
+                    <td>$@item.Price.ToString("N0")</td>
+                </tr>
+                }
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td style="float:right" colspan="10"><strong>Quantity:</strong>@order.Quantity </td>
+                </tr>
+                <tr>
+                    <td style="float:right" colspan="10"><strong>Total Payment:</strong>$@order.TotalCost.ToString("N0") </td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <h4><strong>REPRESENATIVE DEALER</strong><br /></h4>
+                        (Signature, fullname)
+                    </td>
+                    <td colspan="4"></td>
+                    <td colspan="3">
+                        <h4><strong>REPRESENATIVE CUSTOMER</strong><br /></h4>
+                        (Signature, fullname)
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,94 @@
+﻿@model List<Model.EF.Address>
+@{
+    int i = 0;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom
+}
+
+@section jsFooter{
+    <script src="~/Assets/client/js/controller/AddressController.js"></script>
+}
+
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title">
+                    <h2>Multiple Address</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN Main Container col2-right -->
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <section class="col-main col-sm-12 col-xs-12 wow bounceInUp animated animated" style="visibility: visible;">
+                <div class="my-account">
+
+                    <!--page-title-->
+                    <!-- BEGIN DASHBOARD-->
+                    <div class="dashboard">
+                        <div class="recent-orders">
+                            <div class="title-buttons"> <strong>Multiple Address</strong><a href="/Address/Create">Create New</a> </div>
+                            <div class="table-responsive">
+                                <table class="data-table table-striped" id="my-orders-table">
+                                    <colgroup>
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col class="a-center">
+                                    </colgroup>
+                                    <thead>
+                                        <tr class="first last">
+                                            <th>No.</th>
+                                            <th>District</th>
+                                            <th>Province</th>
+                                            <th>Address Detail</th>
+                                            <th>Status</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Model.EF.Address item in Model)
+                                        {
+                                            <tr class="first odd">
+                                                <td>@(i+1)</td>
+                                                <td><span class="nobr">@item.District</span></td>
+                                                <td>@item.Province</td>
+                                                <td>@item.AddressDetail</td>
+                                                <td class="btnStatus" data-id="@item.ID">@(item.Status==true? "Default":"Extra")</td>
+                                                <td class="a-center last">
+                                                    <a href="#" class="btnDelete" data-id="@item.ID" title="Remove item"><span><i class="fa fa-trash fa-2x"></i></span></a>
+
+                                                </td>
+                                            </tr>
+                                        }
+
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <!--table-responsive-->
+                        </div>
+                        <!--recent-orders-->
+                    </div>
+                </div>
+            </section>
+            <!--col-main col-sm-9 wow bounceInUp animated-->
+
+        </div>
+        <!--row-->
+    </div>
+    <!--main container-->
+</section>
+<!--main-container col2-left-layout-->

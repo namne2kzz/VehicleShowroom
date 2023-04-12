@@ -1,0 +1,124 @@
+﻿@model List<Model.ViewModel.OrderDetailModel>
+@{
+    var i = 0;
+    var j = 0;
+    var order = (Model.EF.Order)ViewBag.Order;
+    var service = (List<Model.EF.Service>)ViewBag.Service;
+}
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom
+}
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title">
+                    <h2>Order Detail</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN Main Container col2-right -->
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <section class="col-main col-sm-12 col-xs-12 wow bounceInUp animated animated" style="visibility: visible;">
+                <div class="my-account">
+
+                    <!--page-title-->
+                    <!-- BEGIN DASHBOARD-->
+                    <div class="dashboard">
+                        <div class="recent-orders">
+                            <div class="title-buttons"> <strong>Service Orders</strong> </div>
+                            <div class="table-responsive">
+                                <table class="data-table table-striped" id="my-orders-table">
+                                    <thead>
+                                        <tr class="first last">
+                                            <th>No.</th>
+                                            <th>Service Name</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in service)
+                                        {
+                                            <tr class="first odd">
+                                                <td>@(i+=1)</td>
+                                                <td>@item.Name</td>
+                                                <td>@item.Description</td>
+                                            </tr>
+                                        }
+                                        @(i=0)
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--table-responsive-->
+                        </div>
+                        <div class="recent-orders">
+                            <div class="title-buttons"> <strong>View Orders</strong> </div>
+                            <div class="table-responsive">
+                                <table class="data-table table-striped" id="my-orders-table">
+                                    <thead>
+                                        <tr class="first last">
+                                            <th>No.</th>
+                                            <th>Vehicle Name</th>
+                                            <th>Model Number</th>
+                                            <th>Registration Fee</th>
+                                            <th>Road Maintenance Fee</th>
+                                            <th>Civil Liability Insurance Fee</th>
+                                            <th>Testing Fee</th>
+                                            <th>Registration Plate Fee</th>
+                                            <th>Discount</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (Model.ViewModel.OrderDetailModel item in Model)
+                                        {
+                                        <tr class="first odd">
+                                            <td>@(j+=1)</td>
+                                            <td>@item.VehicleName</td>
+                                            <td>@item.ModelNumber</td>
+                                            <td>$@item.RegistrationFee.ToString("N0")</td>
+                                            <td>$@item.RoadMaintennanceFee.ToString("N0")</td>
+                                            <td>$@item.CivilLiabilityInsuranceFee.ToString("N0")</td>
+                                            <td>$@item.TestingFee.ToString("N0")</td>
+                                            <td>$@item.RegistrationPlateFee.ToString("N0")</td>
+                                            <td>$@item.SaleOff.ToString("N0")</td>
+                                            <td>$@item.Price.ToString("N0")</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10"><strong>Quantity:</strong>@order.Quantity</td>
+                                           
+                                        </tr>
+                                        <tr>
+                                            <td colspan="10"><strong>Total:</strong>$@order.TotalCost.ToString("N0")</td>
+                                        </tr>
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--table-responsive-->
+                        </div>
+                        <!--recent-orders-->                       
+                    </div>
+                </div>
+            </section>
+
+        </div>
+        <!--row-->
+    </div>
+    <!--main container-->
+</section>
+<!--main-container col2-left-layout--> 

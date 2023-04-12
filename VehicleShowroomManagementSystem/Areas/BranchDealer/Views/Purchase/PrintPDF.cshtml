@@ -1,0 +1,132 @@
+﻿@model List<Model.EF.Vehicle>
+@{
+    var billInfo = (Model.EF.Purchase)ViewBag.BillInfo;
+}
+@{
+    var i = 0;  
+}
+
+
+@section title{
+    XBOX Vehicle Showroom - Purchase Management
+}
+
+@section header{
+    Bill Document
+}
+
+<table>
+    <thead>
+        <tr>
+            <td colspan="2">            
+            </td>
+            <td colspan="2">
+                <h1 class=" m-0 font-weight-bold text-primary">PURCHASE INVOICE</h1>
+            </td>
+            <td colspan="2">
+                <h3><strong>XBOX Vehicle Showroom</strong> <br /></h3>
+                Address: No.10 Hoa Binh, Ninh Kieu District, Can Tho City<br />
+                Email: sale.xboxshowroom@xmail.com<br />
+                Phone:02645468921<br />
+                Tax:1800468658-660<br />
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="3">
+                <h3><strong>Saler Information</strong></h3>
+                XXX Company<br />
+                Tax: 1800424587-009<br />
+                Email:xxxcompany@xmail.com<br />
+                Address: No.x, X District, Ho Chi Minh City, Viet Nam<br />
+                Tel:0287 354846<br />
+                Account No.: 001 100 0032205- X Bank- Ho Chi Minh City Branch<br />
+            </td>
+            <td>
+            </td>
+            <td colspan="2">
+                <h3><strong>Dealer Received Information</strong><br /></h3>
+                Reveived Name: @billInfo.ReceivedName<br />
+                Received Address: @billInfo.ReceivedAddress<br />
+                Email: @billInfo.ReceivedEmail<br />
+                Tel: @billInfo.ReceivedPhone<br />
+                Date Of Purchase: @billInfo.CreatedDate.ToShortDateString() <br />
+                Date Of Reveived: @billInfo.ReceivedDate.Value.ToShortDateString() <br />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td colspan="2"><h3>PURCHASE DETAIL</h3></td>
+            <td colspan="2"></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="card-body">
+    <div class="table-responsive">
+        <table style="color: black" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Vehicle Name</th>
+                    <th>Model Number</th>
+                    <th>Seat</th>
+                    <th>Style</th>
+                    <th>Color</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (Model.EF.Vehicle item in Model)
+                {
+                    <tr id="row_@item.ID">
+                        <td>@(i+=1)</td>
+                        <td>@item.Name</td>
+                        <td>@item.ModelNumber</td>
+                        <td>@item.Seat</td>
+                        <td>@item.Style</td>
+                        <td>@item.Color</td>
+                        <td>$@item.HistoricalCost.ToString("N0")</td>
+
+
+                    </tr>
+                }
+
+
+            </tbody>
+            <tfoot>
+                <tr>
+
+
+                    <td colspan="7"><strong>Quantity:</strong>@billInfo.Quantity </td>
+                </tr>
+                <tr>
+
+
+                    <td colspan="7"><strong>Total Payment:</strong>$@billInfo.TotalCost.ToString("N0") </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <h4><strong>REPRESENATIVE COMPANY</strong><br /></h4>
+                        (Signature, fullname)
+                    </td>
+                    <td colspan="3"></td>
+                    <td colspan="2">
+                        <h4><strong>REPRESENATIVE DEALER</strong><br /></h4>
+                        (Signature, fullname)
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+</div>
+
+
+

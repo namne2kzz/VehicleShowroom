@@ -1,0 +1,328 @@
+﻿
+@{
+    var customerSession = (VehicleShowroomManagementSystem.Models.UserLogin)Session[Common.Constants.USER_SESSION];
+}
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var mainSlide = (List<Model.EF.Slide>)ViewBag.MainSlide;
+    var extraSlide = (List<Model.EF.Slide>)ViewBag.ExtraSlide;
+    var listDiscount = (List<Model.ViewModel.DiscountVehicle>)ViewBag.ListDiscount;
+    var listFeature = (List<Model.ViewModel.FeatureVehicle>)ViewBag.ListFeature;
+    var listBlog = (List<Model.ViewModel.BlogDealer>)ViewBag.ListBlog;
+    var listBrand = (List<Model.EF.Brand>)ViewBag.ListBrand;
+    var listDealer = (List<Model.EF.Dealer>)ViewBag.ListDealer;
+}
+
+@section title{
+
+    XBOX Vehicle Showroom
+
+}
+
+@section mainSlide{
+
+    <div class="home-slider5">
+        <div id="thmg-slideshow" class="thmg-slideshow">
+            <div id='rev_slider_4_wrapper' class='rev_slider_wrapper fullwidthbanner-container'>
+                <div id='rev_slider_4' class='rev_slider fullwidthabanner'>
+                    <ul>
+                        @foreach (var item in mainSlide)
+                        {
+                            <li data-transition='random' data-slotamount='7' data-masterspeed='1000' data-thumb='~/Assets/showroom/img/slide/@item.Image'>
+                                <img src='~/Assets/showroom/img/slide/@item.Image' data-bgfit='cover' data-bgrepeat='no-repeat' alt="banner" />
+                                <div class="container">
+                                    <div class="content_slideshow">
+                                        <div class="row">
+                                            <div>
+                                                <div class="info">
+                                                    <div class='tp-caption ExtraLargeTitle sft  tp-resizeme ' data-endspeed='500' data-speed='500' data-start='1100' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:2; white-space:nowrap;'><span>@item.Title</span> </div>
+                                                    <div class='tp-caption LargeTitle sfl  tp-resizeme ' data-endspeed='500' data-speed='500' data-start='1300' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:3; white-space:nowrap;'><span style="font-weight:normal; display:block">@item.Description</span> @item.Detail </div>         
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <div class="tp-bannertimer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+
+
+@section extraSlider{
+
+    <div style="padding-top:50px;" id="top">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in extraSlide)
+                {
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12"> <a href="#" data-scroll-goto="1"> <img src="~/Assets/showroom/img/slide/@item.Image" alt="promotion-banner1"> </a> </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@section onSale{
+
+    <section class=" wow bounceInUp animated">
+        <div class="hot_deals slider-items-products container">
+            <div class="new_title">
+                <h2>On Sale</h2>
+                <div class="box-timer">
+                    <div class="countbox_1 timer-grid"></div>
+                </div>
+            </div>
+            <div id="hot_deals" class="product-flexslider hidden-buttons">
+                <div class="slider-items slider-width-col4 products-grid">
+                    @foreach (var item in listDiscount)
+                    {
+                        <!-- Item -->
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-img">
+                                    <div class="item-img-info">
+                                        <a href="@Url.Action("VehicleDetail","Vehicle",new { vehicleId = item.VehicleID })" title="@item.Description" class="product-image"><img style="height:200px;width:300px;" src="~/Assets/dealer/img/vehicle/@item.Image" alt="@item.Description"></a>
+                                        <div class="sale-label sale-top-right">@(item.SaleOff * 100)%</div>
+                                        <div class="item-box-hover">
+                                            <div class="box-inner">
+                                                <div class="add_cart">
+                                               
+                                                    <a href=@(customerSession==null?"/Customer/Login":"/Cart/AddItem?vehicleId="+item.VehicleID) class="button btn-cart" type="button"></a>
+                                                </div>
+                                                <div class="product-detail-bnt"><a class="button detail-bnt"><span>Quick View</span></a></div>
+                                                <div class="actions">
+                                                    <span class="add-to-links"><a href="@Url.Action("AddCompare","Vehicle",new { vehicleId=item.VehicleID })" class="link-compare" title="Add to Compare"><span>Add to Compare</span></a> </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <div class="info-inner">
+                                        <div class="item-title"><a href="@Url.Action("VehicleDetail","Vehicle",new { vehicleId = item.VehicleID })" title="@item.Description">@item.VehicleName</a> </div>
+                                        <div class="item-content">
+                                            <div class="rating">
+                                                <div class="ratings">
+                                                    <div class="rating-box">
+                                                        <div class="rating" style="width:100%"></div>
+                                                    </div>
+                                                
+                                                </div>
+                                            </div>
+                                            <div class="item-price">
+                                                <div class="price-box"><span class="regular-price"><span class="price">$@item.Price.ToString("N0")</span> </span> </div>
+                                            </div>
+                                            <div class="other-info">
+                                                <div class="col-km"><i class="fa fa-gear"></i> @item.Style</div>
+                                                <div class="col-engine"><i class="fa fa-tachometer"></i> @item.Color</div>
+                                                <div class="col-date"><i class="fa fa-calendar"></i> @item.Model</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Item -->
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+
+@section hotDeal{
+
+    <section class=" wow bounceInUp animated">
+        <div class="hot_deals slider-items-products container">
+            <div class="new_title">
+                <h2>Hot Deals</h2>
+            </div>
+            <div id="hot_deals" class="product-flexslider hidden-buttons">
+                <div class="slider-items slider-width-col4 products-grid">
+                    @foreach (var item in listFeature)
+                    {
+                        <!-- Item -->
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-img">
+                                    <div class="item-img-info">
+                                        <a href="@Url.Action("VehicleDetail","Vehicle",new { vehicleId = item.VehicleID })" title="" class="product-image"><img style="height:200px;width:300px;" src="~/Assets/dealer/img/vehicle/@item.Image" alt=""></a>
+                                        <div class="new-label new-top-left">HOT</div>
+                                        <div class="item-box-hover">
+                                            <div class="box-inner">
+                                                <div class="add_cart">
+                                                    <a href=@(customerSession==null?"/Customer/Login":"/Cart/AddItem?vehicleId="+item.VehicleID) class="button btn-cart" type="button"></a>
+                                                </div>
+                                                <div class="product-detail-bnt"><a class="button detail-bnt"><span>Quick View</span></a></div>
+                                                <div class="actions">
+                                                    <span class="add-to-links"><a href="@Url.Action("AddCompare","Vehicle",new { vehicleId=item.VehicleID })" class="link-compare" title="Add to Compare"><span>Add to Compare</span></a> </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <div class="info-inner">
+                                        <div class="item-title"><a href="@Url.Action("VehicleDetail","Vehicle",new { vehicleId = item.VehicleID })" title="@item.VehicleName">@item.VehicleName</a> </div>
+                                        <div class="item-content">
+                                            <div class="rating">
+                                                <div class="ratings">
+                                                    <div class="rating-box">
+                                                        <div class="rating" style="width:100%"></div>
+                                                    </div>
+                                              
+                                                </div>
+                                            </div>
+                                            <div class="item-price">
+                                                <div class="price-box"><span class="regular-price"><span class="price">$@item.Price.ToString("N0")</span> </span> </div>
+                                            </div>
+                                            <div class="other-info">
+                                                <div class="col-km"><i class="fa fa-gear"></i> @item.Style</div>
+                                                <div class="col-engine"><i class="fa fa-tachometer"></i> @item.Color</div>
+                                                <div class="col-date"><i class="fa fa-calendar"></i> @item.Model</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Item -->
+                    }
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+
+@section latestBlog{
+
+    <div class="latest-blog wow bounceInUp animated animated container">
+        <!--exclude For version 6 -->
+        <div class="blog-home-inner">
+            <div class="blog-title">
+                <h2>Latest Blog post</h2>
+            </div>
+            <!--For version 1,2,3,4,5,6,8 -->
+            <div class="row">
+
+                @foreach (var item in listBlog)
+                {
+                    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4 blog-post">
+                        <div class="blog_inner">
+                            <div class="blog-img"> <a href="/Blog/Index"> <img style="width:400px;height:250px;" src="~/Assets/showroom/img/blog/@item.Image" alt=""> </a> </div>
+                            <!--blog-img-->
+                            <div class="blog-info">
+                                <div class="post-date"> <span class="entry-date">@item.CreatedDate.ToShortDateString()</span> </div>
+                                <ul class="post-meta">
+                                    <li><i class="fa fa-user"></i>Posted by <a href="/Vehicle/ListVehicleByDealer?dealerID=@item.DealerID">@item.DealerName</a> </li>
+                                </ul>
+                                <h3><a href="/Blog/Index">@item.Name</a></h3>
+                               
+                            </div>
+                        </div>
+                        <!--blog_inner-->
+                    </div>
+                }
+            </div>
+        </div>
+        <!--END For version 1,2,3,4,5,6,8 -->
+        <!--exclude For version 6 -->
+        <!--container-->
+    </div>
+
+}
+
+
+@section popularBrand{
+
+    <div class="logo-brand container">
+        <div class="brand-title">
+            <h2>Popular Brands</h2>
+        </div>
+        <div class="slider-items-products">
+            <div id="brand-slider" class="product-flexslider hidden-buttons">
+                <div class="slider-items slider-width-col6">
+                    @foreach (var item in listBrand)
+                    {
+                        <!-- Item -->
+                        <div class="item">
+                            <div class="logo-item"><a href="#"><img style="width:100px; height:100px;" src="~/Assets/showroom/img/brand/@item.Image" alt="@item.Name"></a></div>
+                        </div>
+                        <!-- End Item -->
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<section class=" wow bounceInUp animated">
+    <div class="hot_deals slider-items-products container">
+        <div class="new_title">
+            <h2>All Branch Dealer</h2>
+        </div>
+        <div id="hot_deals" class="product-flexslider hidden-buttons">
+            <div class="slider-items slider-width-col4 products-grid">
+                @foreach (var item in listDealer)
+                {
+                    <!-- Item -->
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-img">
+                                <div class="item-img-info">
+                                    <a href="/Vehicle/ListVehicleByDealer?dealerID=@item.ID" title="@item.DealerName" class="product-image"><img style="width:300px;height:200px;" src="~/Assets/showroom/img/dealer/@item.Avatar" alt="@item.DealerName"></a>
+                                </div>
+                            </div>
+                            <div class="item-info">
+                                <div class="info-inner">
+                                    <div class="item-title"><a href="#" title="@item.DealerName">@item.DealerName</a> </div>
+                                    <div class="item-content">
+                                        <div class="other-info">
+                                            <div class="col-km"><i class="fa fa-envelope"></i> @item.Email</div>
+                                            <div style="float:right" class="col-engine"><i class="fa fa-phone"></i> @item.Phone</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Item -->
+                }
+
+
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+

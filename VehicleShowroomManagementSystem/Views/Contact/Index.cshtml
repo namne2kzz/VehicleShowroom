@@ -1,0 +1,137 @@
+﻿@model Model.EF.Contact
+@{
+    var about = (List<Model.EF.About>)ViewBag.About;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom
+}
+
+@section jsFooter{
+
+    <script src="~/Common/ckeditor/ckeditor.js"></script>
+    <script src="~/Assets/client/js/controller/ContactController.js"></script>
+    <script>
+        CKEDITOR.replace('ckeditor', {
+            customConfig: '/Common/ckeditor/config.js'
+        });
+    </script>
+
+}
+
+
+@if (TempData["msg"] != null)
+{
+    @Html.Raw(TempData["msg"])
+}
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title">
+                    <h2>Contact</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BEGIN Main Container col2-right -->
+<div class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+
+            <div class="col-main col-sm-9 wow bounceInUp animated animated" style="visibility: visible;">
+                <div id="messages_product_view"></div>
+                <div class="static-contain">
+                    @using (Html.BeginForm("Index", "Contact", FormMethod.Post))
+                    {
+
+                        @Html.AntiForgeryToken()
+
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.Province, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("Province", new SelectList(new string[] { }), new { @class = "form-control", @id = "ddlProvince" })
+                                @Html.ValidationMessageFor(model => model.Province, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-bottom:50px;" class="form-group">
+                            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" }, @id = "ckeditor" })
+
+                                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="buttons-set">
+                            <button type="submit" title="Submit" class="button submit"><span><span>Submit</span></span></button>
+                        </div>
+                    }
+                </div>
+
+            </div>
+            <aside class="col-right sidebar col-sm-3 wow bounceInUp animated animated" style="visibility: visible;">
+                <div class="block block-company">
+                    <div class="block-title">Contact</div>
+                    <div class="block-content">
+                        @if (about != null)
+                        {
+                            foreach (var item in about)
+                            {
+                                <ol id="recently-viewed-items">
+
+
+                                    <li class="item odd">
+                                        <strong>@item.Name</strong>
+                                    </li>
+                                    <li class="item even">@item.Email</li>
+                                    <li class="item  odd">@item.Phone</li>
+                                    <li class="item last">@item.Address</li>
+                                </ol>
+                                <hr />
+                            }
+                        }
+
+                    </div>
+                </div>
+            </aside>
+            <!--col-right sidebar-->
+
+        </div>
+        <!--row-->
+    </div>
+    <!--main-container-inner-->
+</div>
+<!--main-container col2-left-layout-->

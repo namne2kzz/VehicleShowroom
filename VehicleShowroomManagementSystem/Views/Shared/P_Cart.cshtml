@@ -1,0 +1,73 @@
+﻿@model List<VehicleShowroomManagementSystem.Models.CartItem>
+@{
+    decimal price = 0;
+    if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            price += item.Vehicle.Price;
+        }
+    }
+    else
+    {
+        price = 0;
+    }
+
+
+}
+
+@{
+    var customerSession = (VehicleShowroomManagementSystem.Models.UserLogin)Session[Common.Constants.USER_SESSION];
+}
+
+@section jsFooter{
+
+    <script src="~/Assets/client/js/controller/CartController.js"></script>
+
+}
+<div class="fl-cart-contain">
+    <div class="mini-cart">
+        <div class="basket"> <a href="/Cart/Index"><span> @(Model !=null? Model.Count().ToString():"0")  </span></a> </div>
+        <div class="fl-mini-cart-content" style="display: none;">
+            <div class="block-subtitle">
+                <div class="top-subtotal">@(Model !=null? Model.Count().ToString() + "items":"0") <span class="price">$@(Model !=null? price.ToString("N0"): "0")</span> </div>
+                <!--top-subtotal-->
+                <!--pull-right-->
+            </div>
+            <!--block-subtitle-->
+            <ul style="width:300px" class="mini-products-list" id="cart-sidebar">
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <li class="item first">
+                            <div class="item-inner">
+                                <a class="product-image" href="#"><img src="~/Assets/dealer/img/vehicle/@item.Image"></a>
+                                <div class="product-details">
+
+                                    <strong>1</strong> x <span class="price">$@item.Vehicle.Price.ToString("N0")</span>
+                                    <p class="product-name"><a href="#">@item.Vehicle.Name</a></p>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <div style="width:300px">
+                        <span>No Item in Cart or You no Login</span>
+                    </div>
+
+                }
+
+
+
+            </ul>
+            <div class="actions">
+                <a href=@(customerSession==null? "/Customer/Login" : "/Cart/Index") class="btn-checkout" title="Checkout"><span>Go To Cart</span></a>
+            </div>
+            <!--actions-->
+        </div>
+        <!--fl-mini-cart-content-->
+    </div>
+</div>

@@ -1,0 +1,144 @@
+﻿@{
+    var session = (VehicleShowroomManagementSystem.Models.UserLogin)Session[Common.Constants.DEALER_SESSION];
+}
+
+
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">@session.Name</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link" href="/BranchDealer/Home/Index">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Vehicle Management
+    </div>
+
+    <!-- Nav Item - Vehicle -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVehicle"
+           aria-expanded="true" aria-controls="collapseVehicle">
+            <i class="fas fa-fw fa-car"></i>
+            <span>Vehicle</span>
+        </a>
+        <div id="collapseVehicle" class="collapse" aria-labelledby="headingVehicle" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                <a class="collapse-item" href="/BranchDealer/Vehicle/Index">Vehicle</a>
+                <a class="collapse-item" href="/BranchDealer/Discount/Index">Discount</a>
+                <a class="collapse-item" href="/BranchDealer/Feature/Index">Feature</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Vehicle Registration -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVehicleRegistration"
+           aria-expanded="true" aria-controls="collapseVehicleRegistration">
+            <i class="fas fa-fw fa-car-side"></i>
+            <span>Vehicle Registration</span>
+        </a>
+        <div id="collapseVehicleRegistration" class="collapse" aria-labelledby="headingVehicleRegistration" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                <a class="collapse-item" href="/BranchDealer/VehicleRegistration/Index">Vehicle Registration Data</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Purchase Management
+    </div>
+
+    <!-- Nav Item - Purchase -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePurchase"
+           aria-expanded="true" aria-controls="collapsePurchase">
+            <i class="fas fa-fw fa-receipt"></i>
+            <span>Purchase</span>
+        </a>
+        <div id="collapsePurchase" class="collapse" aria-labelledby="headingPurchase" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                <a class="collapse-item" href="/BranchDealer/Purchase/Waiting">Waiting</a>
+                <a class="collapse-item" href="/BranchDealer/Purchase/Index">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Order Management
+    </div>
+
+    <!-- Nav Item - Order -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrder"
+           aria-expanded="true" aria-controls="collapseOrder">
+            <i class="fas fa-fw fa-money-bill"></i>
+            <span>Sales Order</span>
+        </a>
+        <div id="collapseOrder" class="collapse" aria-labelledby="headingOrder" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                <a class="collapse-item" href="/BranchDealer/Order/Confirm">Order Requirement</a>
+                <a class="collapse-item" href="/BranchDealer/Order/Index">List</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        System
+    </div>
+
+    <!-- Nav Item - Common -->
+    <li class="nav-item ">
+        <a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseCommon" aria-expanded="true" aria-controls="collapseCommon">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Systemt</span>
+        </a>
+        <div id="collapseCommon" class="collapse " aria-labelledby="headingCommon"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="/BranchDealer/Service/Index">Service</a>
+                <a class="collapse-item" href="/BranchDealer/Blog/Confirm">Waiting Blog</a>
+                <a class="collapse-item" href="/BranchDealer/Blog/Index">Blog</a>
+            </div>
+        </div>
+    </li>  
+  
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>
+
+

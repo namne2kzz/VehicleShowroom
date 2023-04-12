@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/BranchDealer/Views/Shared/_Layouts.cshtml";
+}
+
+@section title{
+    Xbox Showroom
+}
+
+@section header{
+    Report
+}
+
+@section jsFooter{
+
+    <script src="~/Assets/dealer/js/controller/report-chart.js"></script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <select id="ddlMonth" class="form-control" style="width:150px;">
+            <option value="1">Jan</option>
+            <option value="2">Feb</option>
+            <option value="3">Mar</option>
+            <option value="4">Apr</option>
+            <option value="5">May</option>
+            <option value="6">Jun</option>
+            <option value="7">Jul</option>
+            <option value="8">Aug</option>
+            <option value="9">Sep</option>
+            <option value="10">Oct</option>
+            <option value="11">Nov</option>
+            <option value="12">Dec</option>
+        </select>
+    </div>
+
+</div>
+
+
+<div Style="font-family: Corbel; font-size: small ;text-align:center " class="row">
+    <div id="divChartBrandVehicleSell" style="width:100%;height:100%">
+        <canvas id="ChartBrandVehicleSell" style="height:300px;"> </canvas>
+    </div>
+</div>
+
+<div Style="font-family: Corbel; font-size: small ;text-align:center " class="row">
+    <div id="divChartBrandVehicleAvailable" style="width:100%;height:100%">
+        <canvas id="ChartBrandVehicleAvailable" style="height:300px;"> </canvas>
+    </div>
+</div>

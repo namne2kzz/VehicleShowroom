@@ -1,0 +1,85 @@
+﻿@model PagedList.IPagedList<Model.ViewModel.DiscountVehicle>
+@using PagedList.Mvc;
+@{
+
+    Layout = "~/Areas/BranchDealer/Views/Shared/_Layouts.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom - Discount Management
+}
+
+@section header{
+    List Discount Vehicle of Branch Dealer
+}
+@section jsFooter{
+
+    <script src="~/Assets/dealer/js/controller/DiscountController.js"></script>
+}
+
+<div class="card shadow mb-4">
+
+    @using (Html.BeginForm("Index", "Discount", FormMethod.Get))
+    {
+        <div class="row" style="margin:20px 20px 20px 10px;">
+            <div class="col-lg-4">
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search here..." name="searchString" value="@ViewBag.SearchKeyword" aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-lg-6 ">
+                <a href="/BranchDealer/Discount/Create" class="btn btn-primary">Create</a>
+            </div>
+        </div>
+    }
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Vehicle</th>
+                        <th>Description</th>
+                        <th>Started Date</th>
+                        <th>Expired Date</th>
+                        <th>Sale Off</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (Model.ViewModel.DiscountVehicle item in Model)
+                    {
+                        <tr id="row_@item.ID">
+                            <td>
+                                <a href="/BranchDealer/Discount/Edit/@item.ID">Update</a>
+                                |
+                                <a href="#" class="btnDelete" data-id="@item.ID">Delete</a>
+
+                            </td>
+                            <td>@item.VehicleName</td>
+                            <td>@item.Description</td>
+                            <td>@item.StartedDate.ToShortDateString()</td>
+                            <td>@item.ExpiredDate.ToShortDateString()</td>
+                            <td>@item.SaleOff</td>
+                            <td><a href="#" class="ui-btn-active" data-id="@item.ID">@(item.Status ? "Active" : "Lock")</a></td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+        </div>
+    </div>
+</div>
+
+

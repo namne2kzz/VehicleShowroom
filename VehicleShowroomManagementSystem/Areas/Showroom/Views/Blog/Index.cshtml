@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<Model.EF.Blog>
+@using PagedList.Mvc;
+@{
+
+    Layout = "~/Areas/Showroom/Views/Shared/_Layouts.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom - Blog Management
+}
+
+@section header{
+    List Blog of Branch Dealer
+}
+@section jsFooter{
+
+    <script src="~/Assets/showroom/js/controller/BlogController.js"></script>
+}
+
+<div class="card shadow mb-4">
+
+
+    @using (Html.BeginForm("Index", "Blog", FormMethod.Get))
+    {
+        <div class="row" style="margin:20px 20px 20px 10px;">
+            <div class="col-lg-4">
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search here..." name="searchString" value="@ViewBag.SearchKeyword" aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="col-lg-4 ">
+              
+            </div>
+            <div class="col-lg-4">
+                @using (Html.BeginForm("Index", "Blog", FormMethod.Post))
+                {
+
+                    @Html.AntiForgeryToken()
+                    <div class="col-lg-4">
+                        <div style="width:300px;" class="form-group">
+                            @Html.DropDownList("DealerID", ViewBag.Dealer as SelectList, "--All Dealer--", new { @class = "form-control bg-light border-0 small", @id = "dealerID", onchange = "this.form.submit();" })
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    }
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Created Date</th>
+                        <th>Blog Name</th>
+                        <th>Description</th>                        
+                        <th>Image</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (Model.EF.Blog item in Model)
+                    {
+                        <tr id="row_@item.ID">
+                            <td>
+                                <a href="/Showroom/Blog/Edit/@item.ID">Update</a>
+                                |
+                                <a href="#" class="btnDelete" data-id="@item.ID">Delete</a>
+
+                            </td>
+                            <td>@item.CreatedDate.ToShortDateString()</td>
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>                        
+                            <td>
+                                <img src="~/Assets/showroom/img/blog/@item.Image" style="width:100px;height:100px" />
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("ChangeStatus", "Blog", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken();
+
+                                    <div class="form-group">
+                                        @Html.DropDownList("Status", new SelectList(ViewBag.ListStatus, "Value", "Text", item.Status), new { @class = "form-control", @id = item.ID, onchange = "this.form.submit();" })
+                                        @Html.Hidden("id", item.ID)
+                                    </div>
+
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+        </div>
+    </div>
+</div>

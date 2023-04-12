@@ -1,0 +1,271 @@
+﻿@model Model.EF.Order
+@{
+    var customerSession = (VehicleShowroomManagementSystem.Models.UserLogin)Session[Common.Constants.USER_SESSION];
+    var checkout = (List<VehicleShowroomManagementSystem.Models.CartItem>)ViewBag.Checkout;
+    var service = (List<Model.EF.Service>)ViewBag.Service;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section title{
+    XBOX Vehicle Showroom
+}
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title">
+                    <h2>Checkout</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN Main Container -->
+
+<div class="main-container col1-layout wow bounceInUp animated">
+
+    <div class="main">
+        <div class="cart wow bounceInUp animated">            
+            <div class="table-responsive shopping-cart-tbl  container">
+                <h3>All Selected Vehicle</h3>
+                <form action="#" method="post">
+                    <input name="form_key" type="hidden" value="EPYwQxF6xoWcjLUr">
+                    <fieldset>
+                        <table id="shopping-cart-table" class="data-table cart-table table-striped">
+                            <colgroup>
+                                <col width="1">
+                                <col>
+                                <col width="1">
+                                <col width="1">
+                                <col width="1">
+                                <col width="1">
+
+
+
+                            </colgroup>
+                            <thead>
+                                <tr class="first last">
+
+                                    <th rowspan="1">&nbsp;</th>
+                                    <th rowspan="1"><span class="nobr">Product Name</span></th>
+                                    <th rowspan="1">Model Number</th>
+                                    <th class="a-center" colspan="1"><span class="nobr">Sale Off</span></th>
+                                    <th rowspan="1" class="a-center">Price</th>
+                                    <th class="a-center" colspan="1">Subtotal</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (customerSession != null)
+                                {
+                                    foreach (var item in checkout)
+                                    {
+                                        <tr class="first last odd">
+
+                                            <td class="image hidden-table"><a href="#" title="@item.Vehicle.Name" class="product-image"><img src="~/Assets/dealer/img/vehicle/@item.Image" width="200" alt="@item.Vehicle.Name"></a></td>
+                                            <td>
+                                                <h2 class="product-name">
+                                                    <a href="#">@item.Vehicle.Name</a>
+                                                </h2>
+                                            </td>
+                                            <td>
+                                                <h2 class="product-name">
+                                                    <a href="#">@item.Vehicle.ModelNumber</a>
+                                                </h2>
+                                            </td>
+                                            <td class="a-right hidden-table">
+                                                <span class="cart-price">
+                                                    <span class="price">@(item.SaleOff*100)%</span>
+                                                </span>
+
+
+                                            </td>
+
+
+                                            <td class="a-right hidden-table">
+                                                <span class="cart-price">
+                                                    <span class="price">$@item.Vehicle.Price.ToString("N0")</span>
+                                                </span>
+
+
+                                            </td>
+
+                                            <td class="a-right movewishlist">
+                                                <span class="cart-price">
+
+                                                    <span class="price">$@((item.Vehicle.Price-(decimal)item.SaleOff*item.Vehicle.Price).ToString("N0"))</span>
+                                                </span>
+                                            </td>
+
+
+
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <div>No Checked Item</div>
+                                }
+
+                            </tbody>
+                        </table>
+
+                    </fieldset>
+                </form>
+                <div class="shipping">
+
+                    <h3>All Selected Service</h3>
+                    <div class="shipping-form">
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table " id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                           
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @if (service != null)
+                                        {
+                                            foreach (Model.EF.Service item in service)
+                                            {
+                                                <tr id="row_@item.ID">
+                                                   
+                                                    <td>@item.Name</td>
+                                                    <td>@item.Description</td>
+
+
+                                                </tr>
+                                            }
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- BEGIN CART COLLATERALS -->
+
+
+            <div class="cart-collaterals container">
+                <!-- BEGIN COL2 SEL COL 1 -->
+                <!-- BEGIN TOTALS COL 2 -->
+                <h3>Sales Order Information Detail</h3>
+                @using (Html.BeginForm("Index", "Order", FormMethod.Post))
+                {
+            <div class="col-sm-8">
+
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div style="padding-block:20px;" class="form-group">
+                    @Html.LabelFor(model => model.ReceivedName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ReceivedName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ReceivedName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div style="padding-block:20px;" class="form-group">
+                    @Html.LabelFor(model => model.ReceivedAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.ReceivedAddress,ViewBag.Address as SelectList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ReceivedAddress, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div style="padding-block:20px;" class="form-group">
+                    @Html.LabelFor(model => model.ReceivedEmail, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ReceivedEmail, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ReceivedEmail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div style="padding-block:20px;" class="form-group">
+                    @Html.LabelFor(model => model.ReceivedMobile, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ReceivedMobile, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ReceivedMobile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="step-title">
+                    <h3 class="one_page_heading">Estimated recieved date: </h3>
+                    <span style="padding-block:20px;">About 3 days if less than kilomater 100 and one week if greater than kilometer 100</span>
+                    <h3 class="one_page_heading">Payment Method: </h3>
+                    <span style="padding-block:20px;">Payment when received goods</span>
+                   
+                </div>
+            </div>
+
+                    <div class="col-sm-4">
+                        <div class="totals">
+                            <h3>Shopping Cart Total</h3>
+                            <div class="inner">
+
+                                <table id="shopping-cart-totals-table" class="table shopping-cart-table-total">
+                                    <colgroup>
+                                        <col>
+                                        <col width="1">
+                                    </colgroup>
+
+                                    <tbody>
+                                        <tr>
+                                            <td style="" class="a-left" colspan="1">
+                                                <strong>Total Discount</strong>
+                                            </td>
+                                            <td style="" class="a-right">
+                                                <strong><span class="price">$@((ViewBag.TotalDiscount))</span></strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="" class="a-left" colspan="1">
+                                                <strong>Total Cost</strong>
+                                            </td>
+                                            <td style="" class="a-right">
+                                                <strong><span class="price">$@ViewBag.TotalCost</span></strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="" class="a-left" colspan="1">
+                                                <strong>Total Payment</strong>
+                                            </td>
+                                            <td style="" class="a-right">
+                                                <strong><span class="price">$@ViewBag.TotalPayment</span></strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <ul class="checkout">
+                                    <li>
+                                        <button type="submit" id="" title="Proceed to Checkout" class="button btn-proceed-checkout"><span>Require Order</span></button>
+                                    </li>
+
+                                </ul>
+                            </div><!--inner-->
+                        </div><!--totals-->
+                    </div> <!--col-sm-4-->
+
+                }
+            </div> <!--cart-collaterals-->
+
+
+
+        </div>  <!--cart-->
+
+    </div><!--main-container-->
+
+</div> <!--col1-layout-->

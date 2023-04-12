@@ -1,0 +1,233 @@
+﻿@{
+    var customerSession = (VehicleShowroomManagementSystem.Models.UserLogin)Session[Common.Constants.USER_SESSION];
+    var customer = (Model.EF.Customer)ViewBag.Customer;
+    var order = (List<Model.EF.Order>)ViewBag.Order;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section title{
+    XBOX Vehicle Showroom
+}
+
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title">
+                    <h2>Dashboard</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BEGIN Main Container col2-right -->
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <section class="col-main col-sm-12 col-xs-12 wow bounceInUp animated animated" style="visibility: visible;">
+                <div class="my-account">
+
+                    <!--page-title-->
+                    <!-- BEGIN DASHBOARD-->
+                    <div class="dashboard">
+                        <div class="welcome-msg">
+                            <p class="hello"><strong>Hello, @customerSession.UserName!</strong></p>
+                            <p>From your My Account Dashboard you have the ability to view a snapshot of your recent account activity and update your account information. Select a link below to view or edit information.</p>
+                        </div>
+                        <div class="recent-orders">
+                            <div class="title-buttons"> <strong>Recent Orders</strong> </div>
+                            <div class="table-responsive">
+                                <table class="data-table table-striped" id="my-orders-table">
+                                    <colgroup>
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                        <tr class="first last">
+                                            <th>Date</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Quantity</th>
+                                            <th><span class="nobr">Order Total</span></th>
+                                            <th>Status</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in order)
+                                        {
+                                            <tr class="first odd">
+
+                                                <td><span class="nobr">@(item.OrderedDate.ToShortDateString())</span></td>
+                                                <td>@item.ReceivedName</td>
+                                                <td>@item.ReceivedAddress</td>
+                                                <td>@item.Quantity</td>
+                                                <td><span class="price">$@item.TotalCost.ToString("N0")</span></td>
+                                                <td>
+                                                    @if (item.Status == 0)
+                                                    {
+                                                        <em>WAITING CONFIRM</em>
+                                                    }
+                                                    else if (item.Status == 1)
+                                                    {
+                                                        <em>ACCEPT ORDER</em>
+                                                    }
+                                                    else if (item.Status == 2)
+                                                    {
+                                                        <em>DELIVERING</em>
+                                                    }
+                                                    else if (item.Status == 3)
+                                                    {
+                                                        <em>SUCCESSFULLY</em>
+                                                    }
+                                                    else if (item.Status == -2)
+                                                    {
+                                                        <em>FAIL DELIVERRY</em>
+                                                    }
+                                                    else if (item.Status == -3)
+                                                    {
+                                                        <em>CANCEL</em>
+                                                    }
+
+
+                                                </td>
+                                                <td class="a-center last"><span class="nobr"> <a href="@Url.Action("OrderDetail","Order",new {orderId=item.ID })">View Order</a> </span></td>
+                                            </tr>
+                                        }
+
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <!--table-responsive-->
+                           
+                                @if (ViewBag.TotalPage > 1)
+                                {
+                                    var pageDisplay = (int)(ViewBag.MaxPage);//hien thi 5 trang
+                                    int totalPage = (int)ViewBag.TotalPage;//tongr co 2 trang
+                                    int currentPage = (ViewBag.Page != null ? (int)ViewBag.Page : 1);
+
+
+                                    //var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+                                    //var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+                                    var startPageIndex = currentPage - (int)pageDisplay / 2;
+                                    var endPageIndex = currentPage + (int)pageDisplay / 2;
+
+                                    if (startPageIndex <= 0)
+                                    {
+                                        endPageIndex -= (startPageIndex - 1);
+                                        startPageIndex = 1;
+                                    }
+                                    if (endPageIndex > totalPage)
+                                    {
+                                        endPageIndex = totalPage;
+                                        if (endPageIndex > pageDisplay)
+                                        {
+                                            startPageIndex = endPageIndex - (pageDisplay - 1);
+                                        }
+                                    }
+
+                                    var link = "/Customer/DashBoard";
+
+                                    <div class="toolbar bottom">
+                                        <span class="store-qty">Display from index <strong>@(ViewBag.PageSize*(@currentPage-1)+1)</strong> to index <strong>@((ViewBag.PageSize*@currentPage)-ViewBag.PageSize==0? (ViewBag.PageSize * currentPage):ViewBag.Total)</strong> in total <strong>@ViewBag.Total</strong> Sales Order</span>
+                                        @if (endPageIndex > 1)
+                                        {
+
+                                            <div class="pages">
+                                                <ul class="pagination">
+                                                    @if (currentPage > 1)
+
+
+                                                    {
+                                                        <li>
+                                                            <a href="@link?pageIndex=@ViewBag.First" title="First"><i class="fa fa-angle-double-left"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@link?pageIndex=@(currentPage-1)" title="Previous"><i class="fa fa-angle-left"></i></a>
+                                                        </li>
+                                                    }
+
+                                                    @for (var page = startPageIndex; page <= endPageIndex; page++)
+                                                    {
+                                                        <li @(page == currentPage ? "class=active" : "")>
+                                                            <a href="@link?pageIndex=@page">@page</a>
+                                                        </li>
+                                                    }
+                                                    @if (currentPage < ViewBag.TotalPage)
+                                                    {
+                                                        <li>
+                                                            <a href="@link?pageIndex=@(currentPage+1)" title="Next"><i class="fa fa-angle-right"></i></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="@link?pageIndex=@totalPage" title="Last"><i class="fa fa-angle-double-right"></i></a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+
+                                        }
+
+
+                                    </div>
+                                }
+                                else if (ViewBag.TotalRecord == 0)
+                                {
+                                    <sapn>No Record</sapn>
+                                }
+                           
+                        </div>
+                        <!--recent-orders-->
+                        <div class="box-account">
+                            <div class="page-title">
+                                <h2>Account Information</h2>
+                            </div>
+                            <div class="col2-set">
+                                <div class="col-1">
+                                    <div class="box">
+                                        <div class="box-title">
+                                            <h5>Contact Information</h5>
+                                            <a href="/Customer/Profile">Edit</a>
+                                        </div>
+                                        <!--box-title-->
+                                        <div class="box-content">
+                                            <p>
+                                                Name: @customer.Name<br>
+                                                Email: @customer.Email<br />
+                                                Phone: @customer.Phone<br />
+                                                <a href="/Customer/ChangePassword">Change Password</a>
+                                            </p>
+                                        </div>
+                                        <!--box-content-->
+                                        <div class="box">
+                                            <div class="box-title">
+                                                <h4>Address Book</h4>
+                                                <a href="/Address/Index">Manage Addresses</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--box-->
+                                </div>
+                                
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+           
+        </div>
+        <!--row-->
+    </div>
+    <!--main container-->
+</section>
+<!--main-container col2-left-layout--> 

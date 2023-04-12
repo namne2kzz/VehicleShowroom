@@ -1,0 +1,104 @@
+﻿@model Model.EF.Customer
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section title{
+
+    XBOX Vehicle Showroom
+
+}
+@section jsFooter{
+
+    <script src="~/Assets/client/js/controller/RegisterController.js"></script>
+}
+<div class="page-heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-title">
+                    <h2>PROFILE</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            @using (Html.BeginForm("Profile", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="col-main col-sm-9 wow bounceInUp animated animated" style="visibility: visible;">
+                    <div id="messages_product_view"></div>
+                    <div class="static-contain">
+                        @Html.AntiForgeryToken()
+
+
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.ID)
+                        @Html.HiddenFor(model => model.Password)
+                        @Html.HiddenFor(model => model.RoleID)
+                        @Html.HiddenFor(model => model.Status)
+
+                        <div style="padding-block:20px;" class="form-group">
+                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-block:20px;" class="form-group">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-block:20px;" class="form-group">
+                            @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-block:20px;" class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-block:20px;" class="form-group">
+                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div style="padding-block:20px;" class="buttons-set">
+                            <button type="submit" title="Submit" class="button submit"><span><span>Submit</span></span></button>
+                        </div>
+                    </div>
+                </div>
+                <aside class="col-right sidebar col-sm-3 wow bounceInUp animated animated" style="visibility: visible;">
+                    <div class="block block-company">
+                        <div class="block-title">Avatar</div>
+                        <div class="block-content">
+                            <img style="height:250px;width:250px;margin-bottom:20px" src="~/Assets/showroom/img/customer/@Model.Avatar" id="showImg" />
+                            <input style="width:250px;" class="btn btn-primary" type="file" name="uploadImage" id="loadImg" value="Select Image" />
+                            @Html.ValidationMessageFor(model => model.Avatar, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </aside>
+            }
+        </div>
+    </div>
+</div>
